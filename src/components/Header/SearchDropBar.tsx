@@ -1,9 +1,11 @@
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
+import { ContainerFadeInOutVar } from "../../util";
 
-const Contianer = styled.div`
+const Contianer = styled(motion.div)`
   position: absolute;
   padding-top: 11%;
   height: 300%;
@@ -57,7 +59,12 @@ const SearchDropBar = () => {
     console.log(errors.SearchText.message);
   };
   return (
-    <Contianer>
+    <Contianer
+      variants={ContainerFadeInOutVar}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
       <SearchForm onSubmit={handleSubmit(onValid, onInValid)}>
         <SearchInput
           {...register("SearchText", {

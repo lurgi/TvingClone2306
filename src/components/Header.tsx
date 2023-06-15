@@ -6,7 +6,9 @@ import SearchDropBar from "./Header/SearchDropBar";
 import ProfileDropMenu from "./Header/ProfileDropMenu";
 import { useRecoilState } from "recoil";
 import { windowWidth } from "../atoms";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
+import { fadeIn } from "../util";
+import { AnimatePresence } from "framer-motion";
 
 const heightTransfrom = (x: number) => {
   return `${(65 / 1920) * x + 30}px`;
@@ -37,6 +39,10 @@ const Ul = styled.ul`
   li {
     margin-right: 6%;
     font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      color: ${(props) => props.theme.gray100};
+    }
   }
 `;
 
@@ -53,9 +59,18 @@ const HomeLi = styled.li`
   width: 19%;
   max-width: 95px;
 `;
-const LiveBtn = styled.li``;
-const TvBtn = styled.li``;
-const MovieBtn = styled.li``;
+const LiveBtn = styled.li<{ homematch: boolean }>`
+  color: ${(props) =>
+    props.homematch ? props.theme.gray100 : props.theme.gray400};
+`;
+const TvBtn = styled.li<{ tvmatch: boolean }>`
+  color: ${(props) =>
+    props.tvmatch ? props.theme.gray100 : props.theme.gray400};
+`;
+const MovieBtn = styled.li<{ moviematch: boolean }>`
+  color: ${(props) =>
+    props.moviematch ? props.theme.gray100 : props.theme.gray400};
+`;
 const SearchProfile = styled.div`
   height: 100%;
   width: 40%;
@@ -70,15 +85,21 @@ const SearchProfile = styled.div`
 const SearchIcon = styled.button`
   background: none;
   border: none;
-  color: white;
+  color: ${(props) => props.theme.gray50};
   &:hover {
     cursor: pointer;
   }
 `;
+const IconDiv1 = styled.div`
+  animation: ${fadeIn} 0.3s ease-in-out;
+`;
+const IconDiv2 = styled.div`
+  animation: ${fadeIn} 0.3s ease-in-out;
+`;
 const Profile = styled.div`
   width: 8%;
   min-width: 20px;
-  background-color: black;
+  background: none;
   position: relative;
   &::after {
     content: "";
@@ -86,6 +107,12 @@ const Profile = styled.div`
     padding-bottom: 100%;
   }
   border-radius: 20%;
+`;
+const AvatarImg = styled.img`
+  position: absolute;
+  border-radius: 20%;
+  width: 100%;
+  height: 100%;
 `;
 
 function Header() {
@@ -95,6 +122,10 @@ function Header() {
   const handleSearch = () => {
     setIsSearchBar((prev) => !prev);
   };
+  const tvMatch = useMatch("/tv");
+  const movieMatch = useMatch("/movie");
+  const homeMatch = useMatch("/");
+  console.log(Boolean(tvMatch), Boolean(movieMatch));
   useEffect(() => {
     const handleSet = () => {
       setWidth(window.innerWidth);
@@ -122,13 +153,13 @@ function Header() {
               <HomeIcon></HomeIcon>
             </Link>
           </HomeLi>
-          <LiveBtn>
-            <Link to={"/"}>실시간</Link>
+          <LiveBtn homematch={Boolean(homeMatch)}>
+            <Link to={"/"}>홈</Link>
           </LiveBtn>
-          <TvBtn>
+          <TvBtn tvmatch={Boolean(tvMatch)}>
             <Link to={"tv"}>TV프로그램</Link>
           </TvBtn>
-          <MovieBtn>
+          <MovieBtn moviematch={Boolean(movieMatch)}>
             <Link to={"movie"}>영화</Link>
           </MovieBtn>
         </Ul>
@@ -136,22 +167,35 @@ function Header() {
       <SearchProfile>
         <SearchIcon onClick={handleSearch}>
           {isSearchBar ? (
-            <FontAwesomeIcon
-              icon={icon({ name: "xmark", style: "solid" })}
-              style={{ fontSize: "150%" }}
-            />
+            <IconDiv1>
+              <FontAwesomeIcon
+                icon={icon({ name: "xmark", style: "solid" })}
+                style={{ fontSize: "160%" }}
+              />
+            </IconDiv1>
           ) : (
-            <FontAwesomeIcon
-              icon={icon({ name: "magnifying-glass", style: "solid" })}
-              style={{ fontSize: "130%" }}
-            />
+            <IconDiv2>
+              <FontAwesomeIcon
+                icon={icon({ name: "magnifying-glass", style: "solid" })}
+                style={{ fontSize: "130%" }}
+              />
+            </IconDiv2>
           )}
         </SearchIcon>
         <Profile ref={profile}>
-          {isProfileMenu ? <ProfileDropMenu /> : null}
+          <AvatarImg
+            alt="avatar"
+            src="https://image.tving.com/upload/profile/default.png/dims/resize/F_webp,100"
+          ></AvatarImg>
+
+          <AnimatePresence>
+            {isProfileMenu ? <ProfileDropMenu /> : null}
+          </AnimatePresence>
         </Profile>
       </SearchProfile>
-      {isSearchBar ? <SearchDropBar /> : null}
+      <AnimatePresence>
+        {isSearchBar ? <SearchDropBar /> : null}
+      </AnimatePresence>
     </Container>
   );
 }

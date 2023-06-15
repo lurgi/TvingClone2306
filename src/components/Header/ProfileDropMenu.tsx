@@ -1,21 +1,22 @@
 import { styled } from "styled-components";
 import { windowWidth } from "../../atoms";
 import { useRecoilValue } from "recoil";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { ContainerFadeInOutVar } from "../../util";
 
 const fontSizeTransfrom = (x: number) => {
   return `${(1 / 100) * x + 5}px`;
 };
 
-const Container = styled.div<{ width: number }>`
+const Container = styled(motion.div)<{ width: number }>`
   position: absolute;
-  background-color: #202020;
+  background-color: ${(props) => props.theme.gray900};
   top: 140%;
   right: 0;
   width: 750%;
   height: 900%;
   border-radius: 4px;
-  border: 0.5px solid #303030;
+  border: 0.5px solid ${(props) => props.theme.gray600};
   font-size: ${(props) => fontSizeTransfrom(props.width)};
   &::before {
     content: "";
@@ -28,7 +29,7 @@ const Container = styled.div<{ width: number }>`
   }
 `;
 const MenuTitle = styled.div`
-  border-bottom: 0.5px solid ${(props) => props.theme.gray500};
+  border-bottom: 0.5px solid ${(props) => props.theme.gray600};
   height: 27%;
   display: flex;
 `;
@@ -37,6 +38,11 @@ const TitleAvatar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const AvatarImg = styled.img`
+  width: 60%;
+  height: 60%;
+  border-radius: 5px;
 `;
 const TitleDetail = styled.div`
   display: flex;
@@ -60,22 +66,34 @@ const MenuContents = styled.ul`
 const MenuContent = styled.li`
   height: 18%;
   padding-left: 10%;
-  color: ${(props) => props.theme.gray300};
+  color: ${(props) => props.theme.gray400};
   display: flex;
   align-items: center;
+  font-weight: 600;
   &:hover {
     background-color: ${(props) => props.theme.gray600};
-    color: ${(props) => props.theme.gray200};
-    font-weight: 600;
+    color: ${(props) => props.theme.gray100};
+    cursor: pointer;
   }
 `;
 
 const ProfileDropMenu = () => {
   const width = useRecoilValue(windowWidth);
   return (
-    <Container width={width}>
+    <Container
+      width={width}
+      variants={ContainerFadeInOutVar}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
       <MenuTitle>
-        <TitleAvatar>그림</TitleAvatar>
+        <TitleAvatar>
+          <AvatarImg
+            alt="avatar"
+            src="https://image.tving.com/upload/profile/default.png/dims/resize/F_webp,100"
+          ></AvatarImg>
+        </TitleAvatar>
         <TitleDetail>
           <DetailName>이름</DetailName>
           <DetailChange>프로필 전환 &rarr;</DetailChange>

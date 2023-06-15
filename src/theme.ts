@@ -1,14 +1,12 @@
 import { DefaultTheme } from "styled-components";
 
 export const Theme: DefaultTheme = {
-  gray100: "#f1f2f6",
-  gray200: "#dfe4ea",
-  gray300: "#ced6e0",
-  gray400: "#a4b0be",
-  gray500: "#747d8c",
-  gray600: "#57606f",
-  gray700: "#2f3542",
-  gray800: "#1e272e",
-  gray900: "#202020",
-  gray950: "#151515",
+  gray50: "#F7F8F9",
+  gray100: "#EBEBED",
+  gray200: "#C9CDD2",
+  gray400: "#9EA4AA",
+  gray500: "#72787F",
+  gray600: "#454C53",
+  gray800: "#26262B",
+  gray900: "#1B1D1F",
 };
