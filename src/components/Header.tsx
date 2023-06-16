@@ -86,6 +86,7 @@ const SearchIcon = styled.button`
   background: none;
   border: none;
   color: ${(props) => props.theme.gray50};
+  font-size: 100%;
   &:hover {
     cursor: pointer;
   }
@@ -125,7 +126,6 @@ function Header() {
   const tvMatch = useMatch("/tv");
   const movieMatch = useMatch("/movie");
   const homeMatch = useMatch("/");
-  console.log(Boolean(tvMatch), Boolean(movieMatch));
   useEffect(() => {
     const handleSet = () => {
       setWidth(window.innerWidth);
