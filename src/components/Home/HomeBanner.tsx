@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
 import { ITrending } from "../../api";
-import { FadeInOutVar, imageUrlMake } from "../../util";
+import { FadeInOutVar, fadeIn, imageUrlMake } from "../../util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Elipsis from "../others/Elipsis";
+import SquareBtn from "./SquareBtn";
 const Container = styled.div`
   width: 100%;
   position: relative;
@@ -46,29 +47,57 @@ const ArrBtn = styled.div`
     cursor: pointer;
   }
 `;
-const BannerDetail = styled.div`
+const BannerTitle = styled.h1`
   position: absolute;
-  width: 30%;
-  height: 30%;
   left: 5%;
-  bottom: 34%;
-  font-weight: 800;
-  font-size: 300%;
+  max-width: 80%;
+  bottom: 48%;
+  font-weight: 500;
+  font-size: 270%;
   color: ${(props) => props.theme.gray100};
 `;
-const BannerTitle = styled.h1``;
 const BannerItems = styled.div`
   position: absolute;
   width: 100%;
   padding: 5%;
-  bottom: 10%;
+  bottom: 28%;
   color: ${(props) => props.theme.gray100};
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
+const BannerPlay = styled.div`
+  display: flex;
+  align-items: center;
+  width: 15%;
+  padding-top: 2%;
+`;
+const PlayBtn = styled.button`
+  background: none;
+  border: none;
+  width: 15%;
+  margin-right: 8px;
+  font-size: 100%;
+  color: ${(props) => props.theme.gray100};
+  & div {
+    animation: ${fadeIn} 0.2s ease-in-out;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+const IconDiv1 = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const IconDiv2 = styled(IconDiv1)``;
 
 function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
   const [order, setOrder] = useState(1);
+  const [isPlay, setIsPlay] = useState(true);
+  const handlePlay = () => {
+    setIsPlay((prev) => !prev);
+  };
   const handleAfterClick = () => {
     setOrder((prev) => Math.min(prev + 1, 3));
   };
@@ -87,18 +116,33 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
               exit="exit"
               imageUrl={imageUrlMake(data.backdrop_path)}
             >
-              <BannerDetail>
-                <BannerTitle>{data.title || data.name}</BannerTitle>
-              </BannerDetail>
+              <BannerTitle>{data.title || data.name}</BannerTitle>
             </Banner>
           </AnimatePresence>
         ) : null
       )}
       <BannerItems>
-        <div>
-          <Elipsis></Elipsis>
-        </div>
-        <div>자세히보기</div>
+        <BannerPlay>
+          <PlayBtn onClick={handlePlay}>
+            {isPlay ? (
+              <IconDiv1>
+                <FontAwesomeIcon
+                  icon={icon({ name: "pause", style: "solid" })}
+                  style={{ fontSize: "100%" }}
+                />
+              </IconDiv1>
+            ) : (
+              <IconDiv2>
+                <FontAwesomeIcon
+                  icon={icon({ name: "play", style: "solid" })}
+                  style={{ fontSize: "90%" }}
+                />
+              </IconDiv2>
+            )}
+          </PlayBtn>
+          <Elipsis setState={setOrder} max={3}></Elipsis>
+        </BannerPlay>
+        <SquareBtn>자세히보기</SquareBtn>
       </BannerItems>
       <ArrBtn onClick={handleBeforeClick}>
         <FontAwesomeIcon
