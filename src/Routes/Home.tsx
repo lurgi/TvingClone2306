@@ -2,12 +2,9 @@ import { useQuery } from "react-query";
 import { styled } from "styled-components";
 import { ITrendings, fecthTrending } from "../api";
 import { useEffect } from "react";
-import HomeBackScreen from "../components/Home/HomeBackScreen";
+import HomeBanner from "../components/Home/HomeBanner";
 
-const Container = styled.div`
-  background-color: gray;
-  height: 500px;
-`;
+const Container = styled.div``;
 
 function Home() {
   const { isLoading, data } = useQuery<ITrendings>("trending", fecthTrending);
@@ -17,7 +14,11 @@ function Home() {
   }, [data]);
   return (
     <Container>
-      <HomeBackScreen backScreenData={backScreenData!} />
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <HomeBanner backScreenData={backScreenData!} />
+      )}
     </Container>
   );
 }

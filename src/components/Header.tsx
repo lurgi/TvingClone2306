@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import SearchDropBar from "./Header/SearchDropBar";
 import ProfileDropMenu from "./Header/ProfileDropMenu";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { windowWidth } from "../atoms";
 import { Link, useMatch } from "react-router-dom";
 import { fadeIn } from "../util";
@@ -13,16 +13,13 @@ import { AnimatePresence } from "framer-motion";
 const heightTransfrom = (x: number) => {
   return `${(65 / 1920) * x + 30}px`;
 };
-const fontSizeTransfrom = (x: number) => {
-  return `${(1 / 192) * x + 9}px`;
-};
+
 const Container = styled.header<{ width: number }>`
   height: ${(props) => heightTransfrom(props.width)};
   width: 100vw;
   position: absolute;
   background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0));
   color: ${(props) => props.theme.gray100};
-  font-size: ${(props) => fontSizeTransfrom(props.width)};
   display: flex;
   justify-content: space-between;
   z-index: 1;
@@ -59,17 +56,9 @@ const HomeLi = styled.li`
   width: 19%;
   max-width: 95px;
 `;
-const LiveBtn = styled.li<{ homematch: boolean }>`
+const HeaderNavBtn = styled.li<{ match: boolean }>`
   color: ${(props) =>
-    props.homematch ? props.theme.gray100 : props.theme.gray400};
-`;
-const TvBtn = styled.li<{ tvmatch: boolean }>`
-  color: ${(props) =>
-    props.tvmatch ? props.theme.gray100 : props.theme.gray400};
-`;
-const MovieBtn = styled.li<{ moviematch: boolean }>`
-  color: ${(props) =>
-    props.moviematch ? props.theme.gray100 : props.theme.gray400};
+    props.match ? props.theme.gray100 : props.theme.gray400};
 `;
 const SearchProfile = styled.div`
   height: 100%;
@@ -117,7 +106,7 @@ const AvatarImg = styled.img`
 `;
 
 function Header() {
-  const [width, setWidth] = useRecoilState(windowWidth);
+  const width = useRecoilValue(windowWidth);
   const [isSearchBar, setIsSearchBar] = useState(false);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
   const handleSearch = () => {
@@ -126,13 +115,7 @@ function Header() {
   const tvMatch = useMatch("/tv");
   const movieMatch = useMatch("/movie");
   const homeMatch = useMatch("/");
-  useEffect(() => {
-    const handleSet = () => {
-      setWidth(window.innerWidth);
-    };
-    window.addEventListener("resize", handleSet);
-    return () => window.removeEventListener("resize", handleSet);
-  }, [setWidth]);
+
   const profile = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleOverProfile = () => {
@@ -153,15 +136,15 @@ function Header() {
               <HomeIcon></HomeIcon>
             </Link>
           </HomeLi>
-          <LiveBtn homematch={Boolean(homeMatch)}>
+          <HeaderNavBtn match={Boolean(homeMatch)}>
             <Link to={"/"}>홈</Link>
-          </LiveBtn>
-          <TvBtn tvmatch={Boolean(tvMatch)}>
+          </HeaderNavBtn>
+          <HeaderNavBtn match={Boolean(tvMatch)}>
             <Link to={"tv"}>TV프로그램</Link>
-          </TvBtn>
-          <MovieBtn moviematch={Boolean(movieMatch)}>
+          </HeaderNavBtn>
+          <HeaderNavBtn match={Boolean(movieMatch)}>
             <Link to={"movie"}>영화</Link>
-          </MovieBtn>
+          </HeaderNavBtn>
         </Ul>
       </Nav>
       <SearchProfile>
@@ -187,7 +170,6 @@ function Header() {
             alt="avatar"
             src="https://image.tving.com/upload/profile/default.png/dims/resize/F_webp,100"
           ></AvatarImg>
-
           <AnimatePresence>
             {isProfileMenu ? <ProfileDropMenu /> : null}
           </AnimatePresence>

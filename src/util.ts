@@ -9,7 +9,7 @@ to{
 }
 `;
 
-export const ContainerFadeInOutVar = {
+export const FadeInOutVar = {
   initial: {
     opacity: 0,
   },
@@ -19,4 +19,8 @@ export const ContainerFadeInOutVar = {
   exit: {
     opacity: 0,
   },
+};
+
+export const imageUrlMake = (imageUrl: string) => {
+  return `https://image.tmdb.org/t/p/original/${imageUrl}`;
 };

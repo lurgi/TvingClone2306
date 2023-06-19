@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Routes/Home";
 import Movie from "./Routes/Movie";
@@ -6,8 +6,13 @@ import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
 import Heeader from "./components/Header";
 import { createGlobalStyle } from "styled-components";
+import { useRecoilState } from "recoil";
+import { windowWidth } from "./atoms";
 
-const GlobalStyle = createGlobalStyle`
+const fontSizeTransfrom = (x: number) => {
+  return `${(1 / 192) * x + 9}px`;
+};
+const GlobalStyle = createGlobalStyle<{ width: number }>`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -37,9 +42,11 @@ footer, header, hgroup, main, menu, nav, section {
 /* HTML5 hidden-attribute fix for newer browsers */
 *[hidden] {
     display: none;
+
 }
 body {
   line-height: 1;
+  font-size: ${(props) => fontSizeTransfrom(props.width)};
 }
 menu, ol, ul {
   list-style: none;
@@ -69,13 +76,20 @@ a {
   text-decoration:none;
   color:inherit;
 }
-
 `;
 
 function App() {
+  const [width, setWidth] = useRecoilState(windowWidth);
+  useEffect(() => {
+    const handleSet = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleSet);
+    return () => window.removeEventListener("resize", handleSet);
+  }, [setWidth]);
   return (
     <BrowserRouter>
-      <GlobalStyle />
+      <GlobalStyle width={width} />
       <Heeader />
       <Routes>
         <Route path="/" element={<Home />} />

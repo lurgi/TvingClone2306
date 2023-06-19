@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { windowWidth } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import { motion } from "framer-motion";
-import { ContainerFadeInOutVar } from "../../util";
+import { FadeInOutVar } from "../../util";
 
 const fontSizeTransfrom = (x: number) => {
   return `${(1 / 100) * x + 5}px`;
@@ -82,7 +82,7 @@ const ProfileDropMenu = () => {
   return (
     <Container
       width={width}
-      variants={ContainerFadeInOutVar}
+      variants={FadeInOutVar}
       initial="initial"
       animate="animate"
       exit="exit"

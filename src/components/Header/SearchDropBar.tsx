@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
-import { ContainerFadeInOutVar } from "../../util";
+import { FadeInOutVar } from "../../util";
 
 const Contianer = styled(motion.div)`
   position: absolute;
@@ -60,7 +60,7 @@ const SearchDropBar = () => {
   };
   return (
     <Contianer
-      variants={ContainerFadeInOutVar}
+      variants={FadeInOutVar}
       initial="initial"
       animate="animate"
       exit="exit"

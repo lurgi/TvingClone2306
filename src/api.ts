@@ -7,31 +7,24 @@ const options = {
 };
 
 export interface ITrending {
-  overvies: string;
+  overview: string;
   popularity: number;
   backdrop_path: string;
   id: number;
   original_title: string;
   poster_path: string;
   release_date: string;
-  title: string;
+  title?: string;
+  name?: string;
   vote_average: number;
 }
 export interface ITrendings {
   results: ITrending[];
 }
-
+const URL = "https://api.themoviedb.org/3";
 export function fecthTrending() {
   const returnData = fetch(
-    "https://api.themoviedb.org/3/trending/all/day?language=ko-KR",
-    options
-  ).then((response) => response.json());
-  return returnData;
-}
-
-export function fecthGetImage(collection_id: string) {
-  const returnData = fetch(
-    `https://api.themoviedb.org/3/collection/${collection_id}/images`,
+    `${URL}/trending/all/day?language=ko-KR`,
     options
   ).then((response) => response.json());
   return returnData;
