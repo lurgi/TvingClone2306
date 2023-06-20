@@ -12,9 +12,9 @@ const Container = styled.div`
     align-items: center;
   }
 `;
-const IconDiv = styled.div<{ isAccent: boolean }>`
+const IconDiv = styled.div<{ is_accent: boolean }>`
   color: ${(props) =>
-    props.isAccent ? props.theme.gray100 : props.theme.gray400};
+    props.is_accent ? props.theme.gray100 : props.theme.gray400};
   &:hover {
     cursor: pointer;
   }
@@ -39,7 +39,7 @@ const Elipsis = ({
         .map((_, i) => (
           <IconDiv
             key={i}
-            isAccent={i === state}
+            is_accent={i === state}
             onClick={() => handleClick(i)}
           >
             <FontAwesomeIcon

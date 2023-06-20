@@ -3,18 +3,17 @@ import { ITrending } from "../../api";
 import { FadeInOutVar, fadeIn, imageUrlMake } from "../../util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Elipsis from "../others/Elipsis";
 import SquareBtn from "./SquareBtn";
-import { clearInterval } from "timers";
 const Container = styled.div`
   width: 100%;
   position: relative;
   background-color: black;
 `;
 
-const Banner = styled(motion.div)<{ imageUrl: string }>`
+const Banner = styled(motion.div)<{ image_url: string }>`
   width: 100%;
   background-size: cover;
   background-position: center;
@@ -25,7 +24,7 @@ const Banner = styled(motion.div)<{ imageUrl: string }>`
       rgba(0, 0, 0, 0.93),
       rgba(0, 0, 0, 1)
     ),
-    url(${(props) => props.imageUrl});
+    url(${(props) => props.image_url});
   position: relative;
   &::after {
     content: "";
@@ -95,27 +94,29 @@ const IconDiv2 = styled(IconDiv1)``;
 function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
   const [order, setOrder] = useState(1);
   const [isPlay, setIsPlay] = useState(true);
-  const handlePlay = () => {
-    setIsPlay((prev) => !prev);
-  };
+
   const handleAfterClick = () => {
     setOrder((prev) => (prev + 1 === 4 ? 0 : prev + 1));
   };
   const handleBeforeClick = () => {
     setOrder((prev) => (prev - 1 === -1 ? 3 : prev - 1));
   };
-  useEffect(() => {}, [isPlay, order]);
+  const handlePlay = () => {
+    setIsPlay((prev) => {
+      return !prev;
+    });
+  };
   return (
     <Container>
       {backScreenData.map((data, index) =>
         order === index ? (
-          <AnimatePresence>
+          <AnimatePresence key={index}>
             <Banner
               variants={FadeInOutVar}
               initial={"initial"}
               animate={"animate"}
               exit="exit"
-              imageUrl={imageUrlMake(data.backdrop_path)}
+              image_url={imageUrlMake(data.backdrop_path)}
             >
               <BannerTitle>{data.title || data.name}</BannerTitle>
             </Banner>
