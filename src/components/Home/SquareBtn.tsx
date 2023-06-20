@@ -13,10 +13,11 @@ const Container = styled.div`
   border: 1.5px solid ${(props) => props.theme.gray400};
   border-radius: 5px;
   color: ${(props) => props.theme.gray200};
-  transition: color 0.2s ease-in-out, border 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   &:hover {
     border-color: ${(props) => props.theme.gray200};
     cursor: pointer;
+    background-color: rgba(5, 5, 5, 0.1);
   }
 `;
 

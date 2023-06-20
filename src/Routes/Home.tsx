@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { ITrendings, fecthTrending } from "../api";
 import { useEffect } from "react";
 import HomeBanner from "../components/Home/HomeBanner";
+import SliderTemplate from "../components/others/SliderTemplate";
 
 const Container = styled.div``;
 
@@ -17,7 +18,10 @@ function Home() {
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
-        <HomeBanner backScreenData={backScreenData!} />
+        <>
+          <HomeBanner backScreenData={backScreenData!} />
+          <SliderTemplate></SliderTemplate>
+        </>
       )}
     </Container>
   );

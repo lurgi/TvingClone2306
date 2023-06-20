@@ -3,7 +3,7 @@ import { ITrending } from "../../api";
 import { FadeInOutVar, fadeIn, imageUrlMake } from "../../util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Elipsis from "../others/Elipsis";
 import SquareBtn from "./SquareBtn";
@@ -106,6 +106,16 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
       return !prev;
     });
   };
+
+  useEffect(() => {
+    let timer: NodeJS.Timer | undefined;
+    if (isPlay) {
+      timer = setInterval(handleAfterClick, 5000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [order, isPlay]);
   return (
     <Container>
       {backScreenData.map((data, index) =>

@@ -47,6 +47,7 @@ footer, header, hgroup, main, menu, nav, section {
 body {
   line-height: 1;
   font-size: ${(props) => fontSizeTransfrom(props.width)};
+  overflow-x: hidden;
 }
 menu, ol, ul {
   list-style: none;
