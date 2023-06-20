@@ -3,10 +3,11 @@ import { ITrending } from "../../api";
 import { FadeInOutVar, fadeIn, imageUrlMake } from "../../util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Elipsis from "../others/Elipsis";
 import SquareBtn from "./SquareBtn";
+import { clearInterval } from "timers";
 const Container = styled.div`
   width: 100%;
   position: relative;
@@ -20,8 +21,8 @@ const Banner = styled(motion.div)<{ imageUrl: string }>`
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.1),
       rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0.9),
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.93),
       rgba(0, 0, 0, 1)
     ),
     url(${(props) => props.imageUrl});
@@ -69,14 +70,13 @@ const BannerItems = styled.div`
 const BannerPlay = styled.div`
   display: flex;
   align-items: center;
-  width: 15%;
   padding-top: 2%;
 `;
 const PlayBtn = styled.button`
   background: none;
   border: none;
   width: 15%;
-  margin-right: 8px;
+  padding-right: 40%;
   font-size: 100%;
   color: ${(props) => props.theme.gray100};
   & div {
@@ -99,11 +99,12 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
     setIsPlay((prev) => !prev);
   };
   const handleAfterClick = () => {
-    setOrder((prev) => Math.min(prev + 1, 3));
+    setOrder((prev) => (prev + 1 === 4 ? 0 : prev + 1));
   };
   const handleBeforeClick = () => {
-    setOrder((prev) => Math.max(prev - 1, 0));
+    setOrder((prev) => (prev - 1 === -1 ? 3 : prev - 1));
   };
+  useEffect(() => {}, [isPlay, order]);
   return (
     <Container>
       {backScreenData.map((data, index) =>
@@ -140,7 +141,7 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
               </IconDiv2>
             )}
           </PlayBtn>
-          <Elipsis setState={setOrder} max={3}></Elipsis>
+          <Elipsis state={order} setState={setOrder} max={4}></Elipsis>
         </BannerPlay>
         <SquareBtn>자세히보기</SquareBtn>
       </BannerItems>
