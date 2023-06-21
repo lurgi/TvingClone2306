@@ -6,3 +6,9 @@
 
 1. 반응형 디자인. Responsive Design
 2. Framer-motion을 이용한 부드러운 Dropdown Menu 구현
+
+## Banner Component
+
+1. React에서의 setTimeout사용법
+
+## Slider Component

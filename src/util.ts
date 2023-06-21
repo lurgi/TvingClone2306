@@ -21,6 +21,6 @@ export const FadeInOutVar = {
   },
 };
 
-export const imageUrlMake = (imageUrl: string) => {
-  return `https://image.tmdb.org/t/p/original/${imageUrl}`;
+export const imageUrlMake = (imageUrl: string, size: "original" | "w500") => {
+  return `https://image.tmdb.org/t/p/${size}/${imageUrl}`;
 };

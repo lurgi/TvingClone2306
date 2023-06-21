@@ -20,8 +20,7 @@ const Banner = styled(motion.div)<{ image_url: string }>`
   background-image: linear-gradient(
       rgba(0, 0, 0, 0.1),
       rgba(0, 0, 0, 0.1),
-      rgba(0, 0, 0, 0.4),
-      rgba(0, 0, 0, 0.93),
+      rgba(0, 0, 0, 1),
       rgba(0, 0, 0, 1)
     ),
     url(${(props) => props.image_url});
@@ -96,10 +95,10 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
   const [isPlay, setIsPlay] = useState(true);
 
   const handleAfterClick = () => {
-    setOrder((prev) => (prev + 1 === 4 ? 0 : prev + 1));
+    setOrder((prev) => (prev === 3 ? 0 : prev + 1));
   };
   const handleBeforeClick = () => {
-    setOrder((prev) => (prev - 1 === -1 ? 3 : prev - 1));
+    setOrder((prev) => (prev === 0 ? 3 : prev - 1));
   };
   const handlePlay = () => {
     setIsPlay((prev) => {
@@ -126,7 +125,7 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
               initial={"initial"}
               animate={"animate"}
               exit="exit"
-              image_url={imageUrlMake(data.backdrop_path)}
+              image_url={imageUrlMake(data.backdrop_path, "original")}
             >
               <BannerTitle>{data.title || data.name}</BannerTitle>
             </Banner>
@@ -159,13 +158,13 @@ function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
       <ArrBtn onClick={handleBeforeClick}>
         <FontAwesomeIcon
           icon={icon({ name: "chevron-left", style: "solid" })}
-          style={{ fontSize: "190%" }}
+          style={{ fontSize: "180%" }}
         />
       </ArrBtn>
       <ArrBtn onClick={handleAfterClick} style={{ right: 0 }}>
         <FontAwesomeIcon
           icon={icon({ name: "chevron-right", style: "solid" })}
-          style={{ fontSize: "190%" }}
+          style={{ fontSize: "180%" }}
         />
       </ArrBtn>
     </Container>
