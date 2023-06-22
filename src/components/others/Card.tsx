@@ -7,6 +7,11 @@ const Container = styled.div`
   width: 100%;
   font-size: 100%;
   overflow: hidden;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: translateY(-3%);
+  }
 `;
 const CardPoster = styled.div<{ image_url: string }>`
   border-radius: 4px;

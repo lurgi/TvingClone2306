@@ -12,15 +12,21 @@ const Container = styled.div`
   background-color: black;
   position: relative;
   color: ${(props) => props.theme.gray100};
-  margin-bottom: 5%;
+  padding: 0% 5%;
   &::after {
     content: "";
     display: block;
-    padding-bottom: 30%;
+    padding-bottom: 33%;
   }
-`;
-const SliderDetail = styled.div`
-  padding: 0% 5%;
+  & .hover_div {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  &:hover {
+    .hover_div {
+      opacity: 1;
+    }
+  }
 `;
 const Title = styled.h2`
   font-weight: 600;
@@ -36,17 +42,6 @@ const Slider = styled(motion.div)`
   width: 90%;
   grid-template-columns: repeat(5, 1fr);
   gap: 1%;
-`;
-const SliderHover = styled.div`
-  width: 100%;
-  height: 100%;
-  top: 0;
-  opacity: 0;
-  position: absolute;
-  transition: opacity 0.3s ease-in-out;
-  &:hover {
-    opacity: 1;
-  }
 `;
 const ArrBtn = styled.div`
   position: absolute;
@@ -127,45 +122,47 @@ function SliderTemplate({ data, title }: { data: ITrending[]; title: string }) {
   };
   return (
     <Container>
-      <SliderDetail>
-        <Title>{title}</Title>
-        <AnimatePresence
-          initial={false}
-          onExitComplete={() => setIsSliding(false)}
+      <Title>{title}</Title>
+      <AnimatePresence
+        initial={false}
+        onExitComplete={() => setIsSliding(false)}
+        custom={isBack}
+      >
+        <Slider
           custom={isBack}
+          variants={SliderVar}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          key={order}
         >
-          <Slider
-            custom={isBack}
-            variants={SliderVar}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            key={order}
-          >
-            {order !== 0 ? (
-              <LeftSideFakeCard>
-                <Card data={contents[order * 5 - 1]}></Card>
-              </LeftSideFakeCard>
-            ) : null}
-            {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
-              <Card key={i} data={content} />
-            ))}
-            {order !== 3 ? (
-              <RightSideFakeCard>
-                <Card data={contents[order * 5 + 5]}></Card>
-              </RightSideFakeCard>
-            ) : null}
-          </Slider>
-        </AnimatePresence>
-      </SliderDetail>
-      <SliderHover>
+          {order !== 0 ? (
+            <LeftSideFakeCard>
+              <Card data={contents[order * 5 - 1]}></Card>
+            </LeftSideFakeCard>
+          ) : null}
+          {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
+            <Card key={i} data={content} />
+          ))}
+          {order !== 3 ? (
+            <RightSideFakeCard>
+              <Card data={contents[order * 5 + 5]}></Card>
+            </RightSideFakeCard>
+          ) : null}
+        </Slider>
+      </AnimatePresence>
+      <div className="hover_div">
         <EllipsisDiv>
           <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis>
           <span style={{ marginLeft: "15%" }}>전체보기</span>
         </EllipsisDiv>
         <AnimatePresence>
           {order !== 0 ? (
-            <ArrBtn key={"arrbtn1"} onClick={handleBeforeClick}>
+            <ArrBtn
+              key={"arrbtn1"}
+              onClick={handleBeforeClick}
+              style={{ left: 0 }}
+            >
               <FontAwesomeIcon
                 icon={icon({ name: "chevron-left", style: "solid" })}
                 style={{ fontSize: "100%" }}
@@ -185,7 +182,7 @@ function SliderTemplate({ data, title }: { data: ITrending[]; title: string }) {
             </ArrBtn>
           ) : null}
         </AnimatePresence>
-      </SliderHover>
+      </div>
     </Container>
   );
 }
