@@ -4,6 +4,8 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { ITrending } from "../../api";
+import Ellipsis from "./Ellipsis";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Container = styled.div`
   width: 100%;
@@ -14,7 +16,7 @@ const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    padding-bottom: 3%;
+    padding-bottom: 30%;
   }
 `;
 const SliderDetail = styled.div`
@@ -24,11 +26,14 @@ const Title = styled.h2`
   font-weight: 600;
   padding: 1% 0%;
   color: ${(props) => props.theme.gray100};
+  display: flex;
 `;
 
-const Slider = styled.div`
+const Slider = styled(motion.div)`
   display: grid;
-  position: relative;
+  position: absolute;
+  top: 11%;
+  width: 90%;
   grid-template-columns: repeat(5, 1fr);
   gap: 1%;
 `;
@@ -51,72 +56,135 @@ const ArrBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${(props) => props.theme.gray400};
-  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  color: ${(props) => props.theme.gray200};
+  transition: color 0.2s ease-in-out;
+  background-color: rgba(5, 5, 5, 0.4);
   &:hover {
     color: ${(props) => props.theme.gray100};
     cursor: pointer;
-    background-color: rgba(5, 5, 5, 0.1);
   }
 `;
 const LeftSideFakeCard = styled.div`
   position: absolute;
-  left: -20%;
-  width: 18%;
+  left: -20.1%;
+  width: 19.204%;
 `;
 
 const RightSideFakeCard = styled.div`
   position: absolute;
-  right: -20%;
-  width: 18%;
+  right: -20.1%;
+  width: 19.204%;
 `;
+
+const EllipsisDiv = styled.div`
+  position: absolute;
+  width: 20%;
+  font-size: 80%;
+  top: 4%;
+  right: 5%;
+  display: flex;
+  justify-content: end;
+`;
+
+const SliderVar = {
+  initial: (isBack: boolean) => {
+    return { x: isBack ? "-101%" : "101%" };
+  },
+  animate: {
+    x: "0",
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  },
+  exit: (isBack: boolean) => {
+    return {
+      x: isBack ? "101%" : "-101%",
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut",
+      },
+    };
+  },
+};
 
 function SliderTemplate({ data, title }: { data: ITrending[]; title: string }) {
   const contents = data.slice(0, 20);
   const [order, setOrder] = useState(0);
+  const [isBack, setIsBack] = useState(false);
+  const [isSliding, setIsSliding] = useState(false);
   const handleAfterClick = () => {
+    if (isSliding) return;
+    setIsBack(false);
     setOrder((prev) => (prev === 3 ? 3 : prev + 1));
+    setIsSliding(true);
   };
   const handleBeforeClick = () => {
+    if (isSliding) return;
+    setIsBack(true);
     setOrder((prev) => (prev === 0 ? 0 : prev - 1));
+    setIsSliding(true);
   };
   return (
     <Container>
       <SliderDetail>
         <Title>{title}</Title>
-        <Slider>
-          {order !== 0 ? (
-            <LeftSideFakeCard>
-              <Card data={contents[order * 5 - 1]}></Card>
-            </LeftSideFakeCard>
-          ) : null}
-          {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
-            <Card key={i} data={content} />
-          ))}
-          {order !== 3 ? (
-            <RightSideFakeCard>
-              <Card data={contents[order * 5 + 5]}></Card>
-            </RightSideFakeCard>
-          ) : null}
-        </Slider>
+        <AnimatePresence
+          initial={false}
+          onExitComplete={() => setIsSliding(false)}
+          custom={isBack}
+        >
+          <Slider
+            custom={isBack}
+            variants={SliderVar}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            key={order}
+          >
+            {order !== 0 ? (
+              <LeftSideFakeCard>
+                <Card data={contents[order * 5 - 1]}></Card>
+              </LeftSideFakeCard>
+            ) : null}
+            {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
+              <Card key={i} data={content} />
+            ))}
+            {order !== 3 ? (
+              <RightSideFakeCard>
+                <Card data={contents[order * 5 + 5]}></Card>
+              </RightSideFakeCard>
+            ) : null}
+          </Slider>
+        </AnimatePresence>
       </SliderDetail>
       <SliderHover>
-        {order !== 0 ? (
-          <ArrBtn onClick={handleBeforeClick}>
-            <FontAwesomeIcon
-              icon={icon({ name: "chevron-left", style: "solid" })}
-              style={{ fontSize: "100%" }}
-            />
-          </ArrBtn>
-        ) : null}
-        {order !== 3 ? (
-          <ArrBtn onClick={handleAfterClick} style={{ right: 0 }}>
-            <FontAwesomeIcon
-              icon={icon({ name: "chevron-right", style: "solid" })}
-              style={{ fontSize: "100%" }}
-            />
-          </ArrBtn>
-        ) : null}
+        <EllipsisDiv>
+          <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis>
+          <span style={{ marginLeft: "15%" }}>전체보기</span>
+        </EllipsisDiv>
+        <AnimatePresence>
+          {order !== 0 ? (
+            <ArrBtn key={"arrbtn1"} onClick={handleBeforeClick}>
+              <FontAwesomeIcon
+                icon={icon({ name: "chevron-left", style: "solid" })}
+                style={{ fontSize: "100%" }}
+              />
+            </ArrBtn>
+          ) : null}
+          {order !== 3 ? (
+            <ArrBtn
+              key={"arrbtn2"}
+              onClick={handleAfterClick}
+              style={{ right: 0 }}
+            >
+              <FontAwesomeIcon
+                icon={icon({ name: "chevron-right", style: "solid" })}
+                style={{ fontSize: "100%" }}
+              />
+            </ArrBtn>
+          ) : null}
+        </AnimatePresence>
       </SliderHover>
     </Container>
   );

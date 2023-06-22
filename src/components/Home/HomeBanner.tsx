@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import Elipsis from "../others/Elipsis";
+import Elipsis from "../others/Ellipsis";
 import SquareBtn from "./SquareBtn";
 const Container = styled.div`
   width: 100%;

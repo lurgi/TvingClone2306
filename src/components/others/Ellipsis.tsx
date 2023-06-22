@@ -20,7 +20,7 @@ const IconDiv = styled.div<{ is_accent: boolean }>`
   }
 `;
 
-const Elipsis = ({
+const Ellipsis = ({
   setState,
   max,
   state,
@@ -51,4 +51,4 @@ const Elipsis = ({
     </Container>
   );
 };
-export default Elipsis;
+export default Ellipsis;
