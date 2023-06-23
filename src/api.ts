@@ -5,8 +5,8 @@ const options = {
     Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
   },
 };
-
-export interface ITrending {
+const URL = "https://api.themoviedb.org/3";
+export interface IData {
   overview: string;
   popularity: number;
   backdrop_path: string;
@@ -17,14 +17,21 @@ export interface ITrending {
   title?: string;
   name?: string;
   vote_average: number;
+  adult?: boolean;
 }
-export interface ITrendings {
-  results: ITrending[];
+export interface IDatas {
+  results: IData[];
 }
-const URL = "https://api.themoviedb.org/3";
-export function fecthTrending() {
+export function fetchTrending() {
   const returnData = fetch(
     `${URL}/trending/all/day?language=ko-KR`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}
+export function fetchTopMovies() {
+  const returnData = fetch(
+    `${URL}/movie/top_rated?language=ko-KR&page=1`,
     options
   ).then((response) => response.json());
   return returnData;

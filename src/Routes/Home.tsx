@@ -1,29 +1,46 @@
 import { useQuery } from "react-query";
 import { styled } from "styled-components";
-import { ITrendings, fecthTrending } from "../api";
+import { IDatas, fetchTopMovies, fetchTrending } from "../api";
 import HomeBanner from "../components/Home/HomeBanner";
 import SliderTemplate from "../components/others/SliderTemplate";
+import SwiperSlider from "../components/others/SwiperSlider";
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+`;
 const HomeContents = styled.div`
-  transform: translateY(-40%);
+  position: absolute;
+  width: 100%;
+  top: 73%;
 `;
 
 function Home() {
-  const { isLoading, data } = useQuery<ITrendings>("trending", fecthTrending);
-  const backScreenData = data?.results.slice(0, 4);
+  const { isLoading: isTredingLoading, data: trendingData } = useQuery<IDatas>(
+    "trending",
+    fetchTrending
+  );
+  const { isLoading: isTopMovieLoading, data: topMovieData } = useQuery(
+    "movies",
+    fetchTopMovies
+  );
+  const backScreenData = trendingData?.results.slice(0, 4);
+  console.log(topMovieData);
   return (
     <Container>
-      {isLoading ? (
+      {isTredingLoading && isTopMovieLoading ? (
         <h1>Loading...</h1>
       ) : (
         <>
           <HomeBanner backScreenData={backScreenData!} />
           <HomeContents>
             <SliderTemplate
-              data={data?.results.slice(0, 20)!}
+              data={trendingData?.results.slice(0, 20)!}
               title="티빙에서 꼭 봐야하는 콘텐츠"
-            ></SliderTemplate>
+            />
+            <SwiperSlider
+              data={topMovieData?.results.slice(0, 20)!}
+              title="테스트"
+            />
           </HomeContents>
         </>
       )}

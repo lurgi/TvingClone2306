@@ -6,6 +6,11 @@ import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { IData } from "../../api";
 import Ellipsis from "./Ellipsis";
 import { AnimatePresence, motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import { A11y } from "swiper";
 
 const Container = styled.div`
   width: 100%;
@@ -103,7 +108,7 @@ const SliderVar = {
   },
 };
 
-function SliderTemplate({ data, title }: { data: IData[]; title: string }) {
+function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
   const contents = data.slice(0, 20);
   const [order, setOrder] = useState(0);
   const [isBack, setIsBack] = useState(false);
@@ -123,34 +128,28 @@ function SliderTemplate({ data, title }: { data: IData[]; title: string }) {
   return (
     <Container>
       <Title>{title}</Title>
-      <AnimatePresence
-        initial={false}
-        onExitComplete={() => setIsSliding(false)}
+      <Slider
         custom={isBack}
+        variants={SliderVar}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        key={order}
       >
-        <Slider
-          custom={isBack}
-          variants={SliderVar}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          key={order}
-        >
-          {order !== 0 ? (
-            <LeftSideFakeCard>
-              <Card data={contents[order * 5 - 1]}></Card>
-            </LeftSideFakeCard>
-          ) : null}
-          {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
-            <Card key={i} data={content} />
-          ))}
-          {order !== 3 ? (
-            <RightSideFakeCard>
-              <Card data={contents[order * 5 + 5]}></Card>
-            </RightSideFakeCard>
-          ) : null}
-        </Slider>
-      </AnimatePresence>
+        {order !== 0 ? (
+          <LeftSideFakeCard>
+            <Card data={contents[order * 5 - 1]}></Card>
+          </LeftSideFakeCard>
+        ) : null}
+        {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
+          <Card key={i} data={content} />
+        ))}
+        {order !== 3 ? (
+          <RightSideFakeCard>
+            <Card data={contents[order * 5 + 5]}></Card>
+          </RightSideFakeCard>
+        ) : null}
+      </Slider>
       <div className="hover_div">
         <EllipsisDiv>
           {/* <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis> */}
@@ -187,4 +186,4 @@ function SliderTemplate({ data, title }: { data: IData[]; title: string }) {
   );
 }
 
-export default SliderTemplate;
+export default SwiperSlider;

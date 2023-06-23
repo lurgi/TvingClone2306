@@ -48,6 +48,10 @@ body {
   line-height: 1;
   font-size: ${(props) => fontSizeTransfrom(props.width)};
   overflow-x: hidden;
+  -webkit-user-select:none ;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 menu, ol, ul {
   list-style: none;

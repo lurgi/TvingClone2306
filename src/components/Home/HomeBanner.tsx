@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { ITrending } from "../../api";
+import { IData } from "../../api";
 import { FadeInOutVar, fadeIn, imageUrlMake } from "../../util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -90,7 +90,7 @@ const IconDiv1 = styled.div`
 `;
 const IconDiv2 = styled(IconDiv1)``;
 
-function HomeBanner({ backScreenData }: { backScreenData: ITrending[] }) {
+function HomeBanner({ backScreenData }: { backScreenData: IData[] }) {
   const [order, setOrder] = useState(1);
   const [isPlay, setIsPlay] = useState(true);
 

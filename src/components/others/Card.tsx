@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { ITrending } from "../../api";
+import { IData } from "../../api";
 import { imageUrlMake } from "../../util";
 
 const Container = styled.div`
@@ -33,7 +33,7 @@ const CardTitle = styled.div`
   color: ${(props) => props.theme.gray200};
 `;
 
-function Card({ data }: { data: ITrending }) {
+function Card({ data }: { data: IData }) {
   const title = data.name || data.title;
   return (
     <Container>

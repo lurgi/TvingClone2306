@@ -1,6 +1,6 @@
 # TVING CLONE
 
-## Typescript, React, React-Router, Styled-Components, Framer-Motion
+### Typescript, React, React-Router, Styled-Components, Framer-Motion
 
 ## Header Component
 
@@ -14,4 +14,6 @@
 
 ## Slider Component
 
-1. <AnimatePresence>는 arr내부에 넣기. key와 함께 넣어야 정상 작동.
+1. AnimatePresence는 arr내부에 넣기. key와 함께 넣어야 정상 작동.
+2. 기존 Slider component는 framer-moton을 이용하여 다음장 혹은 이전장 으로 넘기는 기능만 탑재.
+3. Top Slider component는 캐러셀 메뉴로 드래그 까지 가능하고, Ellipsis를 클릭하여 한 번에 여러장 이동할 수 있는 기능을 탑재하기 위해 Swiper.js 라이브러리를 사용한다.
