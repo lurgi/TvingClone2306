@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import { A11y } from "swiper";
+import { A11y, Navigation, Pagination } from "swiper";
 
 const Container = styled.div`
   width: 100%;
@@ -21,11 +21,12 @@ const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    padding-bottom: 33%;
+    padding-bottom: 0%;
   }
   & .hover_div {
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
+    z-index: 99;
   }
   &:hover {
     .hover_div {
@@ -41,12 +42,8 @@ const Title = styled.h2`
 `;
 
 const Slider = styled(motion.div)`
-  display: grid;
-  position: absolute;
   top: 11%;
-  width: 90%;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1%;
+  width: 141%;
 `;
 const ArrBtn = styled.div`
   position: absolute;
@@ -64,17 +61,6 @@ const ArrBtn = styled.div`
     cursor: pointer;
   }
 `;
-const LeftSideFakeCard = styled.div`
-  position: absolute;
-  left: -20.1%;
-  width: 19.204%;
-`;
-
-const RightSideFakeCard = styled.div`
-  position: absolute;
-  right: -20.1%;
-  width: 19.204%;
-`;
 
 const EllipsisDiv = styled.div`
   position: absolute;
@@ -85,28 +71,6 @@ const EllipsisDiv = styled.div`
   display: flex;
   justify-content: end;
 `;
-
-const SliderVar = {
-  initial: (isBack: boolean) => {
-    return { x: isBack ? "-101%" : "101%" };
-  },
-  animate: {
-    x: "0",
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  },
-  exit: (isBack: boolean) => {
-    return {
-      x: isBack ? "101%" : "-101%",
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-      },
-    };
-  },
-};
 
 function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
   const contents = data.slice(0, 20);
@@ -128,27 +92,20 @@ function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
   return (
     <Container>
       <Title>{title}</Title>
-      <Slider
-        custom={isBack}
-        variants={SliderVar}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        key={order}
-      >
-        {order !== 0 ? (
-          <LeftSideFakeCard>
-            <Card data={contents[order * 5 - 1]}></Card>
-          </LeftSideFakeCard>
-        ) : null}
-        {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
-          <Card key={i} data={content} />
-        ))}
-        {order !== 3 ? (
-          <RightSideFakeCard>
-            <Card data={contents[order * 5 + 5]}></Card>
-          </RightSideFakeCard>
-        ) : null}
+      <Slider>
+        <Swiper
+          style={{ overflow: "visible" }}
+          modules={[Navigation, Pagination, A11y]}
+          spaceBetween={"1%"}
+          slidesPerView={7}
+          onSlideChange={(swiper) => console.log(swiper)}
+        >
+          {contents.map((content, i) => (
+            <SwiperSlide style={{ overflow: "visible" }}>
+              <Card key={i} data={content} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </Slider>
       <div className="hover_div">
         <EllipsisDiv>
