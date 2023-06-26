@@ -7,10 +7,12 @@ import { IData } from "../../api";
 import Ellipsis from "./Ellipsis";
 import { AnimatePresence, motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useRecoilValue } from "recoil";
+import TypeSwiper, { A11y, Navigation, Pagination } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
-import TypeSwiper, { A11y, Navigation, Pagination } from "swiper";
+import { windowWidth } from "../../atoms";
 
 const Container = styled.div`
   width: 100%;
@@ -72,18 +74,36 @@ const EllipsisDiv = styled.div`
 `;
 
 function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
-  const contents = data.slice(0, 20);
-  const swiperRef = useRef<TypeSwiper | null>(null);
-  const [order, setOrder] = useState(0);
+  const contents = data?.slice(0, 20);
+  const windowSize = useRecoilValue(windowWidth);
+  const swiperRef = useRef<TypeSwiper | null>();
+  const [carousellIndex, setCarousellIndex] = useState(0);
+  const [cards, setCards] = useState<number>(
+    windowSize < 950 ? 5 : windowSize > 950 && windowSize < 1450 ? 6 : 7
+  );
+  useEffect(() => {
+    if (windowSize < 950) {
+      setCards(5);
+    } else if (windowSize > 950 && windowSize < 1450) {
+      setCards(6);
+    } else if (windowSize >= 1450) {
+      setCards(7);
+    }
+  }, [windowSize]);
+  const indexMax = Math.ceil(20 / cards) - 1;
   const handleAfterClick = () => {
-    setOrder((prev) => (prev + 5 > 15 ? 15 : prev + 5));
+    setCarousellIndex((prev) => (prev === indexMax ? indexMax : prev + 1));
   };
   const handleBeforeClick = () => {
-    setOrder((prev) => (prev - 5 < 0 ? 0 : prev - 5));
+    setCarousellIndex((prev) => (prev === 0 ? 0 : prev - 1));
   };
   useEffect(() => {
-    swiperRef.current?.slideTo(order);
-  }, [order]);
+    if (carousellIndex * cards < 20 - cards) {
+      swiperRef.current?.slideTo(carousellIndex * cards);
+    } else {
+      swiperRef.current?.slideTo(20 - cards);
+    }
+  }, [carousellIndex, cards]);
   return (
     <Container>
       <Title>{title}</Title>
@@ -92,14 +112,21 @@ function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
           style={{ overflow: "visible", zIndex: 0 }}
           modules={[Navigation, Pagination, A11y]}
           spaceBetween={"1%"}
-          slidesPerView={5}
+          slidesPerView={cards}
           onSlideChange={(swiper) => {
-            const index = Math.floor(swiper.activeIndex / 5);
-            const rest = swiper.activeIndex % 5;
-            if (rest < 3) {
-              setOrder(index * 5);
+            const index = Math.floor(swiper.activeIndex / cards);
+            const rest = swiper.activeIndex % cards;
+            if (swiper.activeIndex < 20 - cards) {
+              if (rest < Math.ceil(cards / 2)) {
+                setCarousellIndex(index);
+                swiperRef.current?.slideTo(index * cards);
+              } else {
+                setCarousellIndex((index + 1) * cards);
+                swiperRef.current?.slideTo((index + 1) * cards);
+              }
             } else {
-              setOrder((index + 1) * 5);
+              setCarousellIndex(indexMax);
+              swiperRef.current?.slideTo(swiper.activeIndex);
             }
           }}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -114,11 +141,15 @@ function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
       </Slider>
       <div className="hover_div">
         <EllipsisDiv>
-          <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis>
+          <Ellipsis
+            state={carousellIndex}
+            setState={setCarousellIndex}
+            max={indexMax + 1}
+          ></Ellipsis>
           <span style={{ marginLeft: "15%" }}>전체보기</span>
         </EllipsisDiv>
         <AnimatePresence>
-          {order !== 0 ? (
+          {carousellIndex !== 0 ? (
             <ArrBtn
               key={"arrbtn1"}
               onClick={handleBeforeClick}
@@ -130,7 +161,7 @@ function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
               />
             </ArrBtn>
           ) : null}
-          {order !== 15 ? (
+          {carousellIndex !== indexMax ? (
             <ArrBtn
               key={"arrbtn2"}
               onClick={handleAfterClick}

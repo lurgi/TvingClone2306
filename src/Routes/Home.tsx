@@ -24,6 +24,7 @@ function Home() {
     fetchTopMovies
   );
   const backScreenData = trendingData?.results.slice(0, 4);
+
   return (
     <Container>
       {isTredingLoading && isTopMovieLoading ? (
