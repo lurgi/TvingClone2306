@@ -36,3 +36,10 @@ export function fetchTopMovies() {
   ).then((response) => response.json());
   return returnData;
 }
+export function fetchTVPopular() {
+  const returnData = fetch(
+    `${URL}/tv/top_rated?language=ko-KR&page=1`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}

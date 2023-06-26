@@ -73,7 +73,7 @@ const EllipsisDiv = styled.div`
   justify-content: end;
 `;
 
-function SwiperSlider({
+export default function TopSwiperSlider({
   isLoading,
   data,
   title,
@@ -192,5 +192,3 @@ function SwiperSlider({
     </>
   );
 }
-
-export default SwiperSlider;

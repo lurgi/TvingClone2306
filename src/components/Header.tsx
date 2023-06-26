@@ -17,7 +17,8 @@ const heightTransfrom = (x: number) => {
 const Container = styled.header<{ width: number }>`
   height: ${(props) => heightTransfrom(props.width)};
   width: 100vw;
-  position: absolute;
+  position: fixed;
+  top: 0;
   background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0));
   color: ${(props) => props.theme.gray100};
   display: flex;
@@ -127,6 +128,7 @@ function Header() {
     profile.current?.addEventListener("mouseover", handleOverProfile);
     profile.current?.addEventListener("mouseleave", handleLeaveProfile);
   }, []);
+
   return (
     <Container width={width}>
       <Nav>

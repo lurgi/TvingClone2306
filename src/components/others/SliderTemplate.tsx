@@ -15,7 +15,7 @@ const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    padding-bottom: 31%;
+    padding-bottom: 32%;
   }
   & .hover_div {
     opacity: 0;
@@ -102,7 +102,15 @@ const SliderVar = {
   },
 };
 
-function SliderTemplate({ data, title }: { data: IData[]; title: string }) {
+function SliderTemplate({
+  isLoading,
+  data,
+  title,
+}: {
+  isLoading: boolean;
+  data: IData[];
+  title: string;
+}) {
   const contents = data.slice(0, 20);
   const [order, setOrder] = useState(0);
   const [isBack, setIsBack] = useState(false);
@@ -120,69 +128,75 @@ function SliderTemplate({ data, title }: { data: IData[]; title: string }) {
     setIsSliding(true);
   };
   return (
-    <Container>
-      <Title>{title}</Title>
-      <AnimatePresence
-        initial={false}
-        onExitComplete={() => setIsSliding(false)}
-        custom={isBack}
-      >
-        <Slider
-          custom={isBack}
-          variants={SliderVar}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          key={order}
-        >
-          {order !== 0 ? (
-            <LeftSideFakeCard>
-              <Card data={contents[order * 5 - 1]}></Card>
-            </LeftSideFakeCard>
-          ) : null}
-          {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
-            <Card key={i} data={content} />
-          ))}
-          {order !== 3 ? (
-            <RightSideFakeCard>
-              <Card data={contents[order * 5 + 5]}></Card>
-            </RightSideFakeCard>
-          ) : null}
-        </Slider>
-      </AnimatePresence>
-      <div className="hover_div">
-        <EllipsisDiv>
-          {/* <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis> */}
-          <span style={{ marginLeft: "15%" }}>전체보기</span>
-        </EllipsisDiv>
-        <AnimatePresence>
-          {order !== 0 ? (
-            <ArrBtn
-              key={"arrbtn1"}
-              onClick={handleBeforeClick}
-              style={{ left: 0 }}
+    <>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <Container>
+          <Title>{title}</Title>
+          <AnimatePresence
+            initial={false}
+            onExitComplete={() => setIsSliding(false)}
+            custom={isBack}
+          >
+            <Slider
+              custom={isBack}
+              variants={SliderVar}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              key={order}
             >
-              <FontAwesomeIcon
-                icon={icon({ name: "chevron-left", style: "solid" })}
-                style={{ fontSize: "100%" }}
-              />
-            </ArrBtn>
-          ) : null}
-          {order !== 3 ? (
-            <ArrBtn
-              key={"arrbtn2"}
-              onClick={handleAfterClick}
-              style={{ right: 0 }}
-            >
-              <FontAwesomeIcon
-                icon={icon({ name: "chevron-right", style: "solid" })}
-                style={{ fontSize: "100%" }}
-              />
-            </ArrBtn>
-          ) : null}
-        </AnimatePresence>
-      </div>
-    </Container>
+              {order !== 0 ? (
+                <LeftSideFakeCard>
+                  <Card data={contents[order * 5 - 1]}></Card>
+                </LeftSideFakeCard>
+              ) : null}
+              {contents.slice(order * 5, order * 5 + 5).map((content, i) => (
+                <Card key={i} data={content} />
+              ))}
+              {order !== 3 ? (
+                <RightSideFakeCard>
+                  <Card data={contents[order * 5 + 5]}></Card>
+                </RightSideFakeCard>
+              ) : null}
+            </Slider>
+          </AnimatePresence>
+          <div className="hover_div">
+            <EllipsisDiv>
+              {/* <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis> */}
+              <span style={{ marginLeft: "15%" }}>전체보기</span>
+            </EllipsisDiv>
+            <AnimatePresence>
+              {order !== 0 ? (
+                <ArrBtn
+                  key={"arrbtn1"}
+                  onClick={handleBeforeClick}
+                  style={{ left: 0 }}
+                >
+                  <FontAwesomeIcon
+                    icon={icon({ name: "chevron-left", style: "solid" })}
+                    style={{ fontSize: "100%" }}
+                  />
+                </ArrBtn>
+              ) : null}
+              {order !== 3 ? (
+                <ArrBtn
+                  key={"arrbtn2"}
+                  onClick={handleAfterClick}
+                  style={{ right: 0 }}
+                >
+                  <FontAwesomeIcon
+                    icon={icon({ name: "chevron-right", style: "solid" })}
+                    style={{ fontSize: "100%" }}
+                  />
+                </ArrBtn>
+              ) : null}
+            </AnimatePresence>
+          </div>
+        </Container>
+      )}
+    </>
   );
 }
 

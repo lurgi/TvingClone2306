@@ -90,7 +90,13 @@ const IconDiv1 = styled.div`
 `;
 const IconDiv2 = styled(IconDiv1)``;
 
-function HomeBanner({ backScreenData }: { backScreenData: IData[] }) {
+function HomeBanner({
+  isLoading,
+  backScreenData,
+}: {
+  isLoading: boolean;
+  backScreenData: IData[];
+}) {
   const [order, setOrder] = useState(1);
   const [isPlay, setIsPlay] = useState(true);
 
@@ -116,58 +122,64 @@ function HomeBanner({ backScreenData }: { backScreenData: IData[] }) {
     };
   }, [order, isPlay]);
   return (
-    <Container>
-      {backScreenData?.map((data, index) =>
-        order === index ? (
-          <AnimatePresence key={index}>
-            <Banner
-              variants={FadeInOutVar}
-              initial={"initial"}
-              animate={"animate"}
-              exit="exit"
-              image_url={imageUrlMake(data.backdrop_path, "original")}
-            >
-              <BannerTitle>{data.title || data.name}</BannerTitle>
-            </Banner>
-          </AnimatePresence>
-        ) : null
+    <>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <Container>
+          {backScreenData?.map((data, index) =>
+            order === index ? (
+              <AnimatePresence key={index}>
+                <Banner
+                  variants={FadeInOutVar}
+                  initial={"initial"}
+                  animate={"animate"}
+                  exit="exit"
+                  image_url={imageUrlMake(data.backdrop_path, "original")}
+                >
+                  <BannerTitle>{data.title || data.name}</BannerTitle>
+                </Banner>
+              </AnimatePresence>
+            ) : null
+          )}
+          <BannerItems>
+            <BannerPlay>
+              <PlayBtn onClick={handlePlay}>
+                {isPlay ? (
+                  <IconDiv1>
+                    <FontAwesomeIcon
+                      icon={icon({ name: "pause", style: "solid" })}
+                      style={{ fontSize: "100%" }}
+                    />
+                  </IconDiv1>
+                ) : (
+                  <IconDiv2>
+                    <FontAwesomeIcon
+                      icon={icon({ name: "play", style: "solid" })}
+                      style={{ fontSize: "90%" }}
+                    />
+                  </IconDiv2>
+                )}
+              </PlayBtn>
+              <Elipsis state={order} setState={setOrder} max={4}></Elipsis>
+            </BannerPlay>
+            <SquareBtn>자세히보기</SquareBtn>
+          </BannerItems>
+          <ArrBtn onClick={handleBeforeClick}>
+            <FontAwesomeIcon
+              icon={icon({ name: "chevron-left", style: "solid" })}
+              style={{ fontSize: "180%" }}
+            />
+          </ArrBtn>
+          <ArrBtn onClick={handleAfterClick} style={{ right: 0 }}>
+            <FontAwesomeIcon
+              icon={icon({ name: "chevron-right", style: "solid" })}
+              style={{ fontSize: "180%" }}
+            />
+          </ArrBtn>
+        </Container>
       )}
-      <BannerItems>
-        <BannerPlay>
-          <PlayBtn onClick={handlePlay}>
-            {isPlay ? (
-              <IconDiv1>
-                <FontAwesomeIcon
-                  icon={icon({ name: "pause", style: "solid" })}
-                  style={{ fontSize: "100%" }}
-                />
-              </IconDiv1>
-            ) : (
-              <IconDiv2>
-                <FontAwesomeIcon
-                  icon={icon({ name: "play", style: "solid" })}
-                  style={{ fontSize: "90%" }}
-                />
-              </IconDiv2>
-            )}
-          </PlayBtn>
-          <Elipsis state={order} setState={setOrder} max={4}></Elipsis>
-        </BannerPlay>
-        <SquareBtn>자세히보기</SquareBtn>
-      </BannerItems>
-      <ArrBtn onClick={handleBeforeClick}>
-        <FontAwesomeIcon
-          icon={icon({ name: "chevron-left", style: "solid" })}
-          style={{ fontSize: "180%" }}
-        />
-      </ArrBtn>
-      <ArrBtn onClick={handleAfterClick} style={{ right: 0 }}>
-        <FontAwesomeIcon
-          icon={icon({ name: "chevron-right", style: "solid" })}
-          style={{ fontSize: "180%" }}
-        />
-      </ArrBtn>
-    </Container>
+    </>
   );
 }
 

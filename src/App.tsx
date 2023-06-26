@@ -4,10 +4,10 @@ import Home from "./Routes/Home";
 import Movie from "./Routes/Movie";
 import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
-import Heeader from "./components/Header";
 import { createGlobalStyle } from "styled-components";
 import { useRecoilState } from "recoil";
 import { windowWidth } from "./atoms";
+import Header from "./components/Header";
 
 const fontSizeTransfrom = (x: number) => {
   return `${(1 / 192) * x + 9}px`;
@@ -95,7 +95,7 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyle width={width} />
-      <Heeader />
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tv" element={<Tv />} />
