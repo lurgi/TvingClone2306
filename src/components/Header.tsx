@@ -8,22 +8,25 @@ import { useRecoilValue } from "recoil";
 import { windowWidth } from "../atoms";
 import { Link, useMatch } from "react-router-dom";
 import { fadeIn } from "../util";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 
 const heightTransfrom = (x: number) => {
   return `${(65 / 1920) * x + 30}px`;
 };
 
-const Container = styled.header<{ width: number }>`
+const Container = styled.header<{ isOpaque: boolean; width: number }>`
   height: ${(props) => heightTransfrom(props.width)};
   width: 100vw;
   position: fixed;
   top: 0;
-  background: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0));
+  background-image: linear-gradient(rgba(5, 5, 5, 0.8), rgba(5, 5, 5, 0));
+  background-color: rgba(5, 5, 5, ${(props) => (props.isOpaque ? "0.8" : "0")});
+  transition: all 0.3s ease-in-out;
   color: ${(props) => props.theme.gray100};
   display: flex;
   justify-content: space-between;
   z-index: 1;
+  backdrop-filter: blur(${(props) => (props.isOpaque ? "10px" : "0")});
 `;
 const Nav = styled.nav`
   padding: 0 5%;
@@ -129,8 +132,17 @@ function Header() {
     profile.current?.addEventListener("mouseleave", handleLeaveProfile);
   }, []);
 
+  const [isOpaque, setIsOpaque] = useState(false);
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest > 150) {
+      setIsOpaque(true);
+    } else {
+      setIsOpaque(false);
+    }
+  });
   return (
-    <Container width={width}>
+    <Container isOpaque={isOpaque} width={width}>
       <Nav>
         <Ul>
           <HomeLi>
