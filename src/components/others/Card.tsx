@@ -3,7 +3,6 @@ import { IData } from "../../api";
 import { imageUrlMake } from "../../util";
 
 const Container = styled.div`
-  grid-column: 1fr;
   width: 100%;
   font-size: 100%;
   overflow: hidden;

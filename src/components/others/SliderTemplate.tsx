@@ -111,7 +111,7 @@ function SliderTemplate({
   data: IData[];
   title: string;
 }) {
-  const contents = data.slice(0, 20);
+  const contents = data?.slice(0, 20);
   const [order, setOrder] = useState(0);
   const [isBack, setIsBack] = useState(false);
   const [isSliding, setIsSliding] = useState(false);

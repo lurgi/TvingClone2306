@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Card from "./Card";
 import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -13,6 +12,7 @@ import TypeSwiper, { A11y, Navigation, Pagination } from "swiper";
 // Import Swiper styles
 import "swiper/css";
 import { windowWidth } from "../../atoms";
+import TopCard from "./TopCard";
 
 const Container = styled.div`
   width: 100%;
@@ -87,15 +87,27 @@ export default function TopSwiperSlider({
   const swiperRef = useRef<TypeSwiper | null>();
   const [carousellIndex, setCarousellIndex] = useState(0);
   const [cards, setCards] = useState<number>(
-    windowSize < 950 ? 5 : windowSize > 950 && windowSize < 1450 ? 6 : 7
+    windowSize <= 850
+      ? 3.5
+      : windowSize > 850 && windowSize <= 1050
+      ? 4
+      : windowSize > 1050 && windowSize <= 1250
+      ? 4.5
+      : windowSize > 1250 && windowSize <= 1450
+      ? 5
+      : 5.5
   );
   useEffect(() => {
-    if (windowSize < 950) {
+    if (windowSize < 850) {
+      setCards(3.5);
+    } else if (windowSize > 850 && windowSize <= 1050) {
+      setCards(4);
+    } else if (windowSize > 1050 && windowSize <= 1250) {
+      setCards(4.5);
+    } else if (windowSize > 1250 && windowSize <= 1450) {
       setCards(5);
-    } else if (windowSize > 950 && windowSize < 1450) {
-      setCards(6);
-    } else if (windowSize >= 1450) {
-      setCards(7);
+    } else if (windowSize > 1450) {
+      setCards(5.5);
     }
   }, [windowSize]);
   const indexMax = Math.ceil(20 / cards) - 1;
@@ -146,7 +158,7 @@ export default function TopSwiperSlider({
             >
               {contents.map((content, i) => (
                 <SwiperSlide key={i} style={{ overflow: "visible" }}>
-                  <Card data={content} />
+                  <TopCard rank={i + 1} data={content} />
                 </SwiperSlide>
               ))}
             </Swiper>
