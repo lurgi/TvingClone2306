@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import Card from "./Card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { IData } from "../../api";
@@ -10,7 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
-import { A11y, Navigation, Pagination } from "swiper";
+import TypeSwiper, { A11y, Navigation, Pagination } from "swiper";
 
 const Container = styled.div`
   width: 100%;
@@ -21,12 +21,11 @@ const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    padding-bottom: 0%;
+    padding-bottom: 2%;
   }
   & .hover_div {
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
-    z-index: 99;
   }
   &:hover {
     .hover_div {
@@ -43,11 +42,11 @@ const Title = styled.h2`
 
 const Slider = styled(motion.div)`
   top: 11%;
-  width: 141%;
+  width: 100%;
 `;
 const ArrBtn = styled.div`
   position: absolute;
-  width: 5%;
+  width: 4.5%;
   height: 100%;
   top: 0;
   display: flex;
@@ -74,42 +73,48 @@ const EllipsisDiv = styled.div`
 
 function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
   const contents = data.slice(0, 20);
+  const swiperRef = useRef<TypeSwiper | null>(null);
   const [order, setOrder] = useState(0);
-  const [isBack, setIsBack] = useState(false);
-  const [isSliding, setIsSliding] = useState(false);
   const handleAfterClick = () => {
-    if (isSliding) return;
-    setIsBack(false);
-    setOrder((prev) => (prev === 3 ? 3 : prev + 1));
-    setIsSliding(true);
+    setOrder((prev) => (prev + 5 > 15 ? 15 : prev + 5));
   };
   const handleBeforeClick = () => {
-    if (isSliding) return;
-    setIsBack(true);
-    setOrder((prev) => (prev === 0 ? 0 : prev - 1));
-    setIsSliding(true);
+    setOrder((prev) => (prev - 5 < 0 ? 0 : prev - 5));
   };
+  useEffect(() => {
+    swiperRef.current?.slideTo(order);
+  }, [order]);
   return (
     <Container>
       <Title>{title}</Title>
       <Slider>
         <Swiper
-          style={{ overflow: "visible" }}
+          style={{ overflow: "visible", zIndex: 0 }}
           modules={[Navigation, Pagination, A11y]}
           spaceBetween={"1%"}
-          slidesPerView={7}
-          onSlideChange={(swiper) => console.log(swiper)}
+          slidesPerView={5}
+          onSlideChange={(swiper) => {
+            const index = Math.floor(swiper.activeIndex / 5);
+            const rest = swiper.activeIndex % 5;
+            if (rest < 3) {
+              setOrder(index * 5);
+            } else {
+              setOrder((index + 1) * 5);
+            }
+          }}
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          className="mySwiper"
         >
           {contents.map((content, i) => (
-            <SwiperSlide style={{ overflow: "visible" }}>
-              <Card key={i} data={content} />
+            <SwiperSlide key={i} style={{ overflow: "visible" }}>
+              <Card data={content} />
             </SwiperSlide>
           ))}
         </Swiper>
       </Slider>
       <div className="hover_div">
         <EllipsisDiv>
-          {/* <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis> */}
+          <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis>
           <span style={{ marginLeft: "15%" }}>전체보기</span>
         </EllipsisDiv>
         <AnimatePresence>
@@ -125,7 +130,7 @@ function SwiperSlider({ data, title }: { data: IData[]; title: string }) {
               />
             </ArrBtn>
           ) : null}
-          {order !== 3 ? (
+          {order !== 15 ? (
             <ArrBtn
               key={"arrbtn2"}
               onClick={handleAfterClick}

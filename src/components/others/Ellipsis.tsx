@@ -39,8 +39,8 @@ const Ellipsis = ({
         .map((_, i) => (
           <IconDiv
             key={i}
-            is_accent={i === state}
-            onClick={() => handleClick(i)}
+            is_accent={i === Math.floor(state / 5)}
+            onClick={() => handleClick(i * 5)}
           >
             <FontAwesomeIcon
               icon={icon({ name: "circle", style: "solid" })}

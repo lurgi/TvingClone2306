@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { IData } from "../../api";
-import Ellipsis from "./Ellipsis";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Container = styled.div`
@@ -16,7 +15,7 @@ const Container = styled.div`
   &::after {
     content: "";
     display: block;
-    padding-bottom: 33%;
+    padding-bottom: 31%;
   }
   & .hover_div {
     opacity: 0;

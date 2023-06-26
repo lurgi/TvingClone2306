@@ -117,7 +117,7 @@ function HomeBanner({ backScreenData }: { backScreenData: IData[] }) {
   }, [order, isPlay]);
   return (
     <Container>
-      {backScreenData.map((data, index) =>
+      {backScreenData?.map((data, index) =>
         order === index ? (
           <AnimatePresence key={index}>
             <Banner

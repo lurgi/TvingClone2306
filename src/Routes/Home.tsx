@@ -34,11 +34,11 @@ function Home() {
           <HomeContents>
             <SliderTemplate
               data={trendingData?.results.slice(0, 20)!}
-              title="티빙에서 꼭 봐야하는 콘텐츠"
+              title="FrmaerMotion으로 만든 캐러셀"
             />
             <SwiperSlider
               data={topMovieData?.results.slice(0, 20)!}
-              title="테스트"
+              title="Swiper로 만든 캐러셀. Drag, Pagination 기능 구현"
             />
           </HomeContents>
         </>
