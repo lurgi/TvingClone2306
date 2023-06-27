@@ -110,7 +110,8 @@ export default function TopSwiperSlider({
       setCards(5.5);
     }
   }, [windowSize]);
-  const indexMax = Math.ceil(20 / cards) - 1;
+  const floorCardsNum = Math.floor(cards);
+  const indexMax = Math.ceil(20 / floorCardsNum) - 1;
   const handleAfterClick = () => {
     setCarousellIndex((prev) => (prev === indexMax ? indexMax : prev + 1));
   };
@@ -118,12 +119,12 @@ export default function TopSwiperSlider({
     setCarousellIndex((prev) => (prev === 0 ? 0 : prev - 1));
   };
   useEffect(() => {
-    if (carousellIndex * cards < 20 - cards) {
-      swiperRef.current?.slideTo(carousellIndex * cards);
+    if (carousellIndex * floorCardsNum < 20 - floorCardsNum) {
+      swiperRef.current?.slideTo(carousellIndex * floorCardsNum);
     } else {
-      swiperRef.current?.slideTo(20 - cards);
+      swiperRef.current?.slideTo(20 - floorCardsNum);
     }
-  }, [carousellIndex, cards]);
+  }, [carousellIndex, floorCardsNum]);
   return (
     <>
       {isLoading ? (
@@ -138,15 +139,15 @@ export default function TopSwiperSlider({
               spaceBetween={"1%"}
               slidesPerView={cards}
               onSlideChange={(swiper) => {
-                const index = Math.floor(swiper.activeIndex / cards);
-                const rest = swiper.activeIndex % cards;
-                if (swiper.activeIndex < 20 - cards) {
-                  if (rest < Math.ceil(cards / 2)) {
+                const index = Math.floor(swiper.activeIndex / floorCardsNum);
+                const rest = swiper.activeIndex % floorCardsNum;
+                if (swiper.activeIndex < 20 - floorCardsNum) {
+                  if (rest < Math.ceil(floorCardsNum / 2)) {
                     setCarousellIndex(index);
-                    swiperRef.current?.slideTo(index * cards);
+                    swiperRef.current?.slideTo(index * floorCardsNum);
                   } else {
-                    setCarousellIndex((index + 1) * cards);
-                    swiperRef.current?.slideTo((index + 1) * cards);
+                    setCarousellIndex((index + 1) * floorCardsNum);
+                    swiperRef.current?.slideTo((index + 1) * floorCardsNum);
                   }
                 } else {
                   setCarousellIndex(indexMax);
@@ -170,7 +171,7 @@ export default function TopSwiperSlider({
                 setState={setCarousellIndex}
                 max={indexMax + 1}
               ></Ellipsis>
-              <span style={{ marginLeft: "15%" }}>전체보기</span>
+              <span style={{ marginLeft: "3%" }}>전체보기</span>
             </EllipsisDiv>
             <AnimatePresence>
               {carousellIndex !== 0 ? (

@@ -50,7 +50,7 @@ function Home() {
         <TopSwiperSlider
           isLoading={isTVpopularLoading}
           data={tvPopluarData?.results.slice(0, 20)!}
-          title="TV Top 20 프로그램"
+          title="TV Top20 프로그램"
         />
       </HomeContents>
     </Container>

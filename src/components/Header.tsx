@@ -135,7 +135,7 @@ function Header() {
   const [isOpaque, setIsOpaque] = useState(false);
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 150) {
+    if (latest > 100) {
       setIsOpaque(true);
     } else {
       setIsOpaque(false);

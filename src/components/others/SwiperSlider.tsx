@@ -158,7 +158,7 @@ function SwiperSlider({
                 setState={setCarousellIndex}
                 max={indexMax + 1}
               ></Ellipsis>
-              <span style={{ marginLeft: "15%" }}>전체보기</span>
+              <span style={{ marginLeft: "3%" }}>전체보기</span>
             </EllipsisDiv>
             <AnimatePresence>
               {carousellIndex !== 0 ? (

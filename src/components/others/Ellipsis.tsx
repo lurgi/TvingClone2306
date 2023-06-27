@@ -4,10 +4,12 @@ import { styled } from "styled-components";
 
 const Container = styled.div`
   display: flex;
+  width: 20%;
   align-items: center;
   font-size: 100%;
+  justify-content: end;
   & div {
-    margin-right: 25%;
+    margin-right: 20%;
     display: flex;
     align-items: center;
   }
