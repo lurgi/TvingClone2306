@@ -7,12 +7,11 @@ import SwiperSlider from "../components/others/SwiperSlider";
 import TopSwiperSlider from "../components/others/TopSwiperSlider";
 
 const Container = styled.div`
-  position: relative;
+  background-color: rgba(5, 5, 5, 1);
 `;
 const HomeContents = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 73%;
+  transform: translateY(-17%);
+  margin-bottom: -10%;
 `;
 
 function Home() {
@@ -40,12 +39,12 @@ function Home() {
         <SliderTemplate
           isLoading={isTredingLoading}
           data={trendingData?.results.slice(0, 20)!}
-          title="FrmaerMotion으로 만든 캐러셀"
+          title="FrmaerMotion 캐러셀"
         />
         <SwiperSlider
           isLoading={isTopMovieLoading}
           data={topMovieData?.results.slice(0, 20)!}
-          title="Swiper로 만든 캐러셀. Drag, Pagination 기능, 반응형 디자인 구현"
+          title="Swiper 캐러셀, Drag, Pagination, 반응형 디자인"
         />
         <TopSwiperSlider
           isLoading={isTVpopularLoading}

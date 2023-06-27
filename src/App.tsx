@@ -4,10 +4,11 @@ import Home from "./Routes/Home";
 import Movie from "./Routes/Movie";
 import Search from "./Routes/Search";
 import Tv from "./Routes/Tv";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, styled } from "styled-components";
 import { useRecoilState } from "recoil";
 import { windowWidth } from "./atoms";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const fontSizeTransfrom = (x: number) => {
   return `${(1 / 192) * x + 9}px`;
@@ -83,6 +84,10 @@ a {
 }
 `;
 
+const GlobalWrapper = styled.div`
+  position: relative;
+`;
+
 function App() {
   const [width, setWidth] = useRecoilState(windowWidth);
   useEffect(() => {
@@ -95,13 +100,16 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyle width={width} />
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/tv" element={<Tv />} />
-        <Route path="/movie" element={<Movie />} />
-        <Route path="/search" element={<Search />} />
-      </Routes>
+      <GlobalWrapper>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tv" element={<Tv />} />
+          <Route path="/movie" element={<Movie />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
+        <Footer />
+      </GlobalWrapper>
     </BrowserRouter>
   );
 }

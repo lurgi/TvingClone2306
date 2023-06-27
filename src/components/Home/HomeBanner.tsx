@@ -69,12 +69,12 @@ const BannerPlay = styled.div`
   display: flex;
   align-items: center;
   padding-top: 2%;
+  width: 30%;
 `;
 const PlayBtn = styled.button`
   background: none;
   border: none;
-  width: 15%;
-  padding-right: 40%;
+  margin-right: 11%;
   font-size: 100%;
   color: ${(props) => props.theme.gray100};
   & div {

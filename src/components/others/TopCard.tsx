@@ -1,6 +1,8 @@
 import { styled } from "styled-components";
 import { IData } from "../../api";
 import { imageUrlMake } from "../../util";
+import { useRecoilValue } from "recoil";
+import { windowWidth } from "../../atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -10,11 +12,14 @@ const Wrapper = styled.div`
     transform: translateY(-3%);
   }
 `;
-const RankNumber = styled.div`
+const RankNumber = styled.div<{ width: number }>`
   bottom: 0;
   left: -20px;
-  scale: 90%;
-  width: 20%;
+  top: 0px;
+  transform-origin: top left;
+  scale: ${(props) => `${Math.min(Math.floor(props.width / 10), 130)}%`};
+  height: 100%;
+  width: 18%;
 `;
 const Container = styled.div`
   width: 100%;
@@ -34,9 +39,10 @@ const CardPoster = styled.div<{ image_url: string }>`
 `;
 
 export default function TopCard({ rank, data }: { rank: number; data: IData }) {
+  const width = useRecoilValue(windowWidth);
   return (
     <Wrapper>
-      <RankNumber>
+      <RankNumber width={width}>
         {rank === 1 ? (
           <svg
             width="30"

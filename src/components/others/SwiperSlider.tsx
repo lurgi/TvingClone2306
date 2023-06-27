@@ -90,7 +90,9 @@ function SwiperSlider({
     windowSize < 950 ? 5 : windowSize > 950 && windowSize < 1450 ? 6 : 7
   );
   useEffect(() => {
-    if (windowSize < 950) {
+    if (windowSize < 650) {
+      setCards(4);
+    } else if (windowSize > 650 && windowSize < 950) {
       setCards(5);
     } else if (windowSize > 950 && windowSize < 1450) {
       setCards(6);
