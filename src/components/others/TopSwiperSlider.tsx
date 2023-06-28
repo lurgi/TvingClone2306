@@ -99,15 +99,15 @@ export default function TopSwiperSlider({
   );
   useEffect(() => {
     if (windowSize < 850) {
-      setCards(3.5);
-    } else if (windowSize > 850 && windowSize <= 1050) {
       setCards(4);
-    } else if (windowSize > 1050 && windowSize <= 1250) {
+    } else if (windowSize > 850 && windowSize <= 1050) {
       setCards(4.5);
-    } else if (windowSize > 1250 && windowSize <= 1450) {
+    } else if (windowSize > 1050 && windowSize <= 1250) {
       setCards(5);
-    } else if (windowSize > 1450) {
+    } else if (windowSize > 1250 && windowSize <= 1450) {
       setCards(5.5);
+    } else if (windowSize > 1450) {
+      setCards(6);
     }
   }, [windowSize]);
   const floorCardsNum = Math.floor(cards);
@@ -171,7 +171,6 @@ export default function TopSwiperSlider({
                 setState={setCarousellIndex}
                 max={indexMax + 1}
               ></Ellipsis>
-              <span style={{ marginLeft: "3%" }}>전체보기</span>
             </EllipsisDiv>
             <AnimatePresence>
               {carousellIndex !== 0 ? (

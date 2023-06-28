@@ -29,16 +29,30 @@ export function fetchTrending(page: number) {
   ).then((response) => response.json());
   return returnData;
 }
-export function fetchTopMovies() {
+export function fetchTopMovies(page: number) {
   const returnData = fetch(
-    `${URL}/movie/top_rated?language=ko-KR&page=1`,
+    `${URL}/movie/top_rated?language=ko-KR&page=${page}`,
     options
   ).then((response) => response.json());
   return returnData;
 }
-export function fetchTVPopular() {
+export function fetchPopularMovies(page: number) {
   const returnData = fetch(
-    `${URL}/tv/top_rated?language=ko-KR&page=1`,
+    `${URL}/movie/popular?language=ko-KR&page=${page}`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}
+export function fetchTVOnTheAir(page: number) {
+  const returnData = fetch(
+    `${URL}/tv/on_the_air?language=ko-KR&page=${page}`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}
+export function fetchTVTop(page: number) {
+  const returnData = fetch(
+    `${URL}/tv/top_rated?language=ko-KR&page=${page}`,
     options
   ).then((response) => response.json());
   return returnData;

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Elipsis from "../others/Ellipsis";
 import SquareBtn from "./SquareBtn";
+import { Link } from "react-router-dom";
 const Container = styled.div`
   width: 100%;
   position: relative;
@@ -98,7 +99,7 @@ function HomeBanner({
   isLoading: boolean;
   backScreenData: IData[];
 }) {
-  const [order, setOrder] = useState(1);
+  const [order, setOrder] = useState(0);
   const [isPlay, setIsPlay] = useState(true);
 
   const handleAfterClick = () => {
@@ -164,7 +165,7 @@ function HomeBanner({
               </PlayBtn>
               <Elipsis state={order} setState={setOrder} max={4}></Elipsis>
             </BannerPlay>
-            <SquareBtn>자세히보기</SquareBtn>
+            <SquareBtn to={backScreenData[order].id}>자세히보기</SquareBtn>
           </BannerItems>
           <ArrBtn onClick={handleBeforeClick}>
             <FontAwesomeIcon

@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
-const Container = styled.div`
+const Container = styled(Link)`
   @media (max-width: 1000px) {
     padding: 2% 4.5%;
   }
@@ -21,7 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const SquareBtn = ({ children }: any) => {
-  return <Container>{children}</Container>;
+const SquareBtn = ({ children, to }: any) => {
+  return <Container to={`/detail/${to}`}>{children}</Container>;
 };
 export default SquareBtn;

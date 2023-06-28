@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { IData } from "../../api";
 import { imageUrlMake } from "../../util";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
@@ -36,10 +37,12 @@ function Card({ data }: { data: IData }) {
   const title = data.name || data.title;
   return (
     <Container>
-      <CardPoster
-        image_url={imageUrlMake(data.poster_path, "w500")}
-      ></CardPoster>
-      <CardTitle>{title}</CardTitle>
+      <Link to={`/detail/${data.id}`}>
+        <CardPoster
+          image_url={imageUrlMake(data.poster_path, "w500")}
+        ></CardPoster>
+        <CardTitle>{title}</CardTitle>
+      </Link>
     </Container>
   );
 }

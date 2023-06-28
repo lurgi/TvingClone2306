@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { styled } from "styled-components";
-import { IDatas, fetchTVPopular, fetchTopMovies, fetchTrending } from "../api";
+import { IDatas, fetchTVTop, fetchTopMovies, fetchTrending } from "../api";
 import HomeBanner from "../components/Home/HomeBanner";
 import SliderTemplate from "../components/others/SliderTemplate";
 import SwiperSlider from "../components/others/SwiperSlider";
@@ -19,11 +19,11 @@ function Home() {
     useQuery<IDatas>("trending2", () => fetchTrending(2));
   const { isLoading: isTopMovieLoading, data: topMovieData } = useQuery(
     "movies",
-    fetchTopMovies
+    () => fetchTopMovies(1)
   );
   const { isLoading: isTVpopularLoading, data: tvPopluarData } = useQuery(
     "TVpopular",
-    fetchTVPopular
+    () => fetchTVTop(1)
   );
   const backScreenData = trendingData?.results.slice(0, 4);
 
@@ -36,7 +36,7 @@ function Home() {
       <SliderTemplate
         isLoading={isTredingLoading}
         data={trendingData?.results.slice(0, 20)!}
-        title="FrmaerMotion 캐러셀"
+        title="FrmaerMotion 캐러셀, 반응형X"
       />
       <SwiperSlider
         isLoading={isTopMovieLoading}

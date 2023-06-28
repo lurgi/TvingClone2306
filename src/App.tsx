@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { windowWidth } from "./atoms";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Detail from "./Routes/Detail/[id]";
 
 const fontSizeTransfrom = (x: number) => {
   return `${(1 / 192) * x + 9}px`;
@@ -107,6 +108,7 @@ function App() {
           <Route path="/tv" element={<Tv />} />
           <Route path="/movie" element={<Movie />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
         <Footer />
       </GlobalWrapper>

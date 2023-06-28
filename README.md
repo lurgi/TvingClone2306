@@ -1,8 +1,8 @@
 # TVING CLONE
 
-### 사용 언어 Typescript
+### 사용 언어 : Typescript
 
-### 라이브러리 React, React-Router, Styled-Components, Framer-Motion, Swiper
+### 라이브러리 : React, React-Router, Styled-Components, Framer-Motion, Swiper
 
 ---
 

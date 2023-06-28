@@ -165,7 +165,6 @@ function SliderTemplate({
           <div className="hover_div">
             <EllipsisDiv>
               {/* <Ellipsis state={order} setState={setOrder} max={4}></Ellipsis> */}
-              <span style={{ marginLeft: "3%" }}>전체보기</span>
             </EllipsisDiv>
             <AnimatePresence>
               {order !== 0 ? (
