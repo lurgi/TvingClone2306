@@ -9,16 +9,14 @@ import TopSwiperSlider from "../components/others/TopSwiperSlider";
 const Container = styled.div`
   background-color: rgba(5, 5, 5, 1);
 `;
-const HomeContents = styled.div`
-  transform: translateY(-17%);
-  margin-bottom: -10%;
-`;
 
 function Home() {
   const { isLoading: isTredingLoading, data: trendingData } = useQuery<IDatas>(
     "trending",
-    fetchTrending
+    () => fetchTrending(1)
   );
+  const { isLoading: isTredingLoading2, data: trendingData2 } =
+    useQuery<IDatas>("trending2", () => fetchTrending(2));
   const { isLoading: isTopMovieLoading, data: topMovieData } = useQuery(
     "movies",
     fetchTopMovies
@@ -35,23 +33,26 @@ function Home() {
         isLoading={isTredingLoading}
         backScreenData={backScreenData!}
       />
-      <HomeContents>
-        <SliderTemplate
-          isLoading={isTredingLoading}
-          data={trendingData?.results.slice(0, 20)!}
-          title="FrmaerMotion 캐러셀"
-        />
-        <SwiperSlider
-          isLoading={isTopMovieLoading}
-          data={topMovieData?.results.slice(0, 20)!}
-          title="Swiper 캐러셀, Drag, Pagination, 반응형 디자인"
-        />
-        <TopSwiperSlider
-          isLoading={isTVpopularLoading}
-          data={tvPopluarData?.results.slice(0, 20)!}
-          title="TV Top20 프로그램"
-        />
-      </HomeContents>
+      <SliderTemplate
+        isLoading={isTredingLoading}
+        data={trendingData?.results.slice(0, 20)!}
+        title="FrmaerMotion 캐러셀"
+      />
+      <SwiperSlider
+        isLoading={isTopMovieLoading}
+        data={topMovieData?.results.slice(0, 20)!}
+        title="Swiper 캐러셀, Drag, Pagination, 반응형 디자인"
+      />
+      <TopSwiperSlider
+        isLoading={isTVpopularLoading}
+        data={tvPopluarData?.results.slice(0, 20)!}
+        title="TV Top20 프로그램"
+      />
+      <SwiperSlider
+        isLoading={isTredingLoading2}
+        data={trendingData2?.results.slice(0, 20)!}
+        title="인기있는 TV시리즈, 영화"
+      />
     </Container>
   );
 }

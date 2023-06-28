@@ -10,6 +10,7 @@ import SquareBtn from "./SquareBtn";
 const Container = styled.div`
   width: 100%;
   position: relative;
+  margin-bottom: -18%;
   background-color: black;
 `;
 

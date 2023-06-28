@@ -22,9 +22,9 @@ export interface IData {
 export interface IDatas {
   results: IData[];
 }
-export function fetchTrending() {
+export function fetchTrending(page: number) {
   const returnData = fetch(
-    `${URL}/trending/all/day?language=ko-KR`,
+    `${URL}/trending/all/day?language=ko-KR&page=${page}`,
     options
   ).then((response) => response.json());
   return returnData;
