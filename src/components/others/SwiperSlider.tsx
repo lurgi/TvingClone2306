@@ -77,10 +77,12 @@ function SwiperSlider({
   isLoading,
   data,
   title,
+  category,
 }: {
   isLoading: boolean;
   data: IData[];
   title: string;
+  category?: "movie" | "tv";
 }) {
   const contents = data?.slice(0, 20);
   const windowSize = useRecoilValue(windowWidth);
@@ -148,7 +150,7 @@ function SwiperSlider({
             >
               {contents.map((content, i) => (
                 <SwiperSlide key={i} style={{ overflow: "visible" }}>
-                  <Card data={content} />
+                  <Card data={content} category={category} />
                 </SwiperSlide>
               ))}
             </Swiper>

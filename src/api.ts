@@ -18,6 +18,7 @@ export interface IData {
   name?: string;
   vote_average: number;
   adult?: boolean;
+  media_type?: "movie" | "tv";
 }
 export interface IDatas {
   results: IData[];

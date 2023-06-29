@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { fetchTVTop } from "../api";
+import { fetchTVTop } from "../../api";
 import { styled } from "styled-components";
-import SwiperSlider from "../components/others/SwiperSlider";
-import TopSwiperSlider from "../components/others/TopSwiperSlider";
+import SwiperSlider from "../../components/others/SwiperSlider";
+import TopSwiperSlider from "../../components/others/TopSwiperSlider";
 
 const Contianer = styled.div`
   width: 100%;
@@ -37,26 +37,31 @@ function Tv() {
         isLoading={isTVpopularLoading2}
         data={tvPopluarData2?.results.slice(0, 20)!}
         title="좋아할만한 프로그램"
+        category="tv"
       />
       <TopSwiperSlider
         isLoading={isTVpopularLoading}
         data={tvPopluarData?.results.slice(0, 20)!}
         title="TV Top20 프로그램"
+        category="tv"
       />
       <SwiperSlider
         isLoading={isTVpopularLoading3}
         data={tvPopluarData3?.results.slice(0, 20)!}
         title="좋아할만한 프로그램2"
+        category="tv"
       />
       <SwiperSlider
         isLoading={isTVpopularLoading4}
         data={tvPopluarData4?.results.slice(0, 20)!}
         title="좋아할만한 프로그램3"
+        category="tv"
       />
       <SwiperSlider
         isLoading={isTVpopularLoading5}
         data={tvPopluarData5?.results.slice(0, 20)!}
         title="좋아할만한 프로그램"
+        category="tv"
       />
     </Contianer>
   );

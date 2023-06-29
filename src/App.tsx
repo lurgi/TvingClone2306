@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Routes/Home";
-import Movie from "./Routes/Movie";
+import Movie from "./Routes/movies/Movie";
 import Search from "./Routes/Search";
-import Tv from "./Routes/Tv";
+import Tv from "./Routes/tv/Tv";
 import { createGlobalStyle, styled } from "styled-components";
 import { useRecoilState } from "recoil";
 import { windowWidth } from "./atoms";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Detail from "./Routes/Detail/[id]";
+import TvDetail from "./Routes/tv/[id]";
+import MovieDetail from "./Routes/movies/[id]";
 
 const fontSizeTransfrom = (x: number) => {
   return `${(1 / 192) * x + 9}px`;
@@ -106,9 +107,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tv" element={<Tv />} />
+          <Route path="/tv/:id" element={<TvDetail />} />
           <Route path="/movie" element={<Movie />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/detail/:id" element={<Detail />} />
         </Routes>
         <Footer />
       </GlobalWrapper>

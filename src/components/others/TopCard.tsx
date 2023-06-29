@@ -39,10 +39,17 @@ const CardPoster = styled.div<{ image_url: string }>`
   }
 `;
 
-export default function TopCard({ rank, data }: { rank: number; data: IData }) {
+interface IProps {
+  rank: number;
+  data: IData;
+  category?: "movie" | "tv";
+}
+
+export default function TopCard({ rank, data, category }: IProps) {
   const width = useRecoilValue(windowWidth);
+  const linkTo = category || data.media_type;
   return (
-    <Link to={`/detail/${data.id}`}>
+    <Link to={`/${linkTo}/${data.id}`}>
       <Wrapper>
         <RankNumber width={width}>
           {rank === 1 ? (

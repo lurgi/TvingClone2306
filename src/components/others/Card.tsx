@@ -33,11 +33,12 @@ const CardTitle = styled.div`
   color: ${(props) => props.theme.gray200};
 `;
 
-function Card({ data }: { data: IData }) {
+function Card({ data, category }: { data: IData; category?: "movie" | "tv" }) {
   const title = data.name || data.title;
+  const linkTo = category || data.media_type;
   return (
     <Container>
-      <Link to={`/detail/${data.id}`}>
+      <Link to={`/${linkTo}/${data.id}`}>
         <CardPoster
           image_url={imageUrlMake(data.poster_path, "w500")}
         ></CardPoster>

@@ -77,10 +77,12 @@ export default function TopSwiperSlider({
   isLoading,
   data,
   title,
+  category,
 }: {
   isLoading: boolean;
   data: IData[];
   title: string;
+  category?: "movie" | "tv";
 }) {
   const contents = data?.slice(0, 20);
   const windowSize = useRecoilValue(windowWidth);
@@ -159,7 +161,7 @@ export default function TopSwiperSlider({
             >
               {contents.map((content, i) => (
                 <SwiperSlide key={i} style={{ overflow: "visible" }}>
-                  <TopCard rank={i + 1} data={content} />
+                  <TopCard rank={i + 1} data={content} category={category} />
                 </SwiperSlide>
               ))}
             </Swiper>

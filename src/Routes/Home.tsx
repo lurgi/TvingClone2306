@@ -26,7 +26,7 @@ function Home() {
     () => fetchTVTop(1)
   );
   const backScreenData = trendingData?.results.slice(0, 4);
-
+  console.log(trendingData);
   return (
     <Container>
       <HomeBanner
@@ -42,11 +42,13 @@ function Home() {
         isLoading={isTopMovieLoading}
         data={topMovieData?.results.slice(0, 20)!}
         title="Swiper 캐러셀, Drag, Pagination, 반응형 디자인"
+        category="movie"
       />
       <TopSwiperSlider
         isLoading={isTVpopularLoading}
         data={tvPopluarData?.results.slice(0, 20)!}
         title="TV Top20 프로그램"
+        category="tv"
       />
       <SwiperSlider
         isLoading={isTredingLoading2}

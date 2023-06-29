@@ -106,10 +106,13 @@ function SliderTemplate({
   isLoading,
   data,
   title,
+  category,
 }: {
   isLoading: boolean;
   data: IData[];
   title: string;
+
+  category?: "movie" | "tv";
 }) {
   const contents = data?.slice(0, 20);
   const [order, setOrder] = useState(0);
@@ -157,7 +160,10 @@ function SliderTemplate({
               ))}
               {order !== 3 ? (
                 <RightSideFakeCard>
-                  <Card data={contents[order * 5 + 5]}></Card>
+                  <Card
+                    data={contents[order * 5 + 5]}
+                    category={category}
+                  ></Card>
                 </RightSideFakeCard>
               ) : null}
             </Slider>
