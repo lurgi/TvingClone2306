@@ -1,3 +1,5 @@
+import Detail from "../../components/Detail";
+
 export default function TvDetail() {
-  return <h1>hi</h1>;
+  return <Detail />;
 }

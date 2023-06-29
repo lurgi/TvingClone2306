@@ -7,7 +7,7 @@ import Tv from "./Routes/tv/Tv";
 import { createGlobalStyle, styled } from "styled-components";
 import { useRecoilState } from "recoil";
 import { windowWidth } from "./atoms";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer";
 import TvDetail from "./Routes/tv/[id]";
 import MovieDetail from "./Routes/movies/[id]";

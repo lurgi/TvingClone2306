@@ -58,3 +58,17 @@ export function fetchTVTop(page: number) {
   ).then((response) => response.json());
   return returnData;
 }
+
+export function fetchDetail({
+  category,
+  id,
+}: {
+  category?: "movie" | "tv";
+  id?: string;
+}) {
+  const returnData = fetch(
+    `${URL}/${category}/${id}?language=ko-KR`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}

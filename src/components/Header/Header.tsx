@@ -2,12 +2,12 @@ import { icon } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import SearchDropBar from "./Header/SearchDropBar";
-import ProfileDropMenu from "./Header/ProfileDropMenu";
+import SearchDropBar from "./SearchDropBar";
+import ProfileDropMenu from "./ProfileDropMenu";
 import { useRecoilValue } from "recoil";
-import { windowWidth } from "../atoms";
+import { windowWidth } from "../../atoms";
 import { Link, useMatch } from "react-router-dom";
-import { fadeIn } from "../util";
+import { fadeIn } from "../../util";
 import { AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 
 const heightTransfrom = (x: number) => {
