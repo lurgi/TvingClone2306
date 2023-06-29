@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Elipsis from "../others/Ellipsis";
 import SquareBtn from "./SquareBtn";
-import { Link } from "react-router-dom";
 const Container = styled.div`
   width: 100%;
   position: relative;
@@ -165,7 +164,12 @@ function HomeBanner({
               </PlayBtn>
               <Elipsis state={order} setState={setOrder} max={4}></Elipsis>
             </BannerPlay>
-            <SquareBtn to={backScreenData[order].id}>자세히보기</SquareBtn>
+            <SquareBtn
+              category={backScreenData[order].media_type}
+              id={backScreenData[order].id}
+            >
+              자세히보기
+            </SquareBtn>
           </BannerItems>
           <ArrBtn onClick={handleBeforeClick}>
             <FontAwesomeIcon

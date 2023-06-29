@@ -22,7 +22,13 @@ const Container = styled(Link)`
   }
 `;
 
-const SquareBtn = ({ children, to }: any) => {
-  return <Container to={`/detail/${to}`}>{children}</Container>;
+interface IProps {
+  children: React.ReactElement | string;
+  category: string | undefined;
+  id: number;
+}
+
+const SquareBtn = ({ children, category, id }: IProps) => {
+  return <Container to={`/${category}/${id}`}>{children}</Container>;
 };
 export default SquareBtn;

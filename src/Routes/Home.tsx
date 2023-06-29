@@ -26,7 +26,6 @@ function Home() {
     () => fetchTVTop(1)
   );
   const backScreenData = trendingData?.results.slice(0, 4);
-  console.log(trendingData);
   return (
     <Container>
       <HomeBanner
