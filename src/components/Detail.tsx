@@ -1,4 +1,4 @@
-import { useMatch, useParams } from "react-router-dom";
+import { Link, useMatch, useParams } from "react-router-dom";
 import { fetchDetail, fetchSimilar } from "../api";
 import { useQuery } from "react-query";
 import styled from "styled-components";
@@ -38,7 +38,7 @@ const Contianer = styled.div`
 const DetailMain = styled.div<{ img_path: string }>`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   padding: 10% 5%;
   position: relative;
   z-index: 0;
@@ -64,22 +64,26 @@ const DetailMain = styled.div<{ img_path: string }>`
   }
 `;
 const DetailMainInfo = styled.div`
-  width: 65%;
+  width: 60%;
   padding: 2% 5% 2% 1%;
   display: flex;
   flex-direction: column;
-  & > * {
+  & > *:not(:last-child) {
     margin-bottom: 5%;
   }
 `;
 const InfoTitle = styled.span`
   color: ${(props) => props.theme.gray50};
+  height: 18%;
   font-weight: 600;
   font-size: 300%;
+  margin-bottom: 1%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 const InfoLank = styled.span`
-  font-size: 33%;
-  margin-left: 2%;
+  font-size: 100%;
   color: ${(props) => props.theme.gray200};
 `;
 const InfoBtns = styled.button`
@@ -108,23 +112,21 @@ const InfoBtns = styled.button`
   }
 `;
 const InfoOverview = styled.span`
-  height: 60%;
   overflow: hidden;
   text-overflow: ellipsis;
   color: ${(props) => props.theme.gray200};
 `;
 const DetailMainImg = styled.div<{ img_path: string }>`
-  width: 30%;
-  min-width: 200px;
+  width: 35%;
   margin-right: 5%;
   background-color: gray;
   background-image: url(${(props) => props.img_path});
   background-size: cover;
   border-radius: 5px;
+  position: relative;
   &::after {
     content: "";
-    display: block;
-    padding-bottom: 145%;
+    height: 51%;
   }
 `;
 
@@ -150,12 +152,12 @@ export default function Detail() {
           img_path={imageUrlMake(detailData?.backdrop_path || "", "original")}
         >
           <DetailMainInfo>
-            <InfoTitle>
-              {title}
-              <InfoLank>평점 : {detailData?.vote_average}</InfoLank>
-            </InfoTitle>
+            <InfoTitle>{title}</InfoTitle>
+            <InfoLank>평점 : {detailData?.vote_average}</InfoLank>
             <InfoBtns>
-              <span>자세히 보기 &rarr;</span>
+              <Link to={detailData?.homepage || "/"}>
+                <span>자세히 보기 &rarr;</span>
+              </Link>
             </InfoBtns>
             <InfoOverview>{detailData?.overview}</InfoOverview>
           </DetailMainInfo>
