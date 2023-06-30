@@ -1,8 +1,9 @@
 import { useMatch, useParams } from "react-router-dom";
-import { fetchDetail } from "../api";
+import { fetchDetail, fetchSimilar } from "../api";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import { imageUrlMake } from "../util";
+import SwiperSlider from "./others/SwiperSlider";
 
 interface IDetailData {
   adult: boolean;
@@ -30,7 +31,9 @@ interface IDetailData {
 
 const Contianer = styled.div`
   background-color: rgba(5, 5, 5, 1);
-  color: ${(props) => props.theme.gray200};
+  color: ${(props) => props.theme.gray100};
+  font-size: 100%;
+  min-height: 90vh;
 `;
 const DetailMain = styled.div<{ img_path: string }>`
   width: 100%;
@@ -61,18 +64,58 @@ const DetailMain = styled.div<{ img_path: string }>`
   }
 `;
 const DetailMainInfo = styled.div`
-  width: 70%;
+  width: 65%;
   padding: 2% 5% 2% 1%;
   display: flex;
   flex-direction: column;
+  & > * {
+    margin-bottom: 5%;
+  }
 `;
 const InfoTitle = styled.span`
+  color: ${(props) => props.theme.gray50};
+  font-weight: 600;
+  font-size: 300%;
+`;
+const InfoLank = styled.span`
+  font-size: 33%;
+  margin-left: 2%;
   color: ${(props) => props.theme.gray200};
 `;
-const InfoBtns = styled.div``;
-const InfoOverview = styled.span``;
+const InfoBtns = styled.button`
+  width: 13em;
+  border-radius: 5px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1%;
+  font-weight: 600;
+  font-size: 1.2em;
+  scale: 1;
+  background-color: ${(props) => props.theme.gray100};
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: ${(props) => props.theme.gray50};
+    cursor: pointer;
+    scale: 1.05;
+    font-size: 1.05;
+  }
+  &:after {
+    content: "";
+    display: block;
+    padding-bottom: 3em;
+  }
+`;
+const InfoOverview = styled.span`
+  height: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${(props) => props.theme.gray200};
+`;
 const DetailMainImg = styled.div<{ img_path: string }>`
   width: 30%;
+  min-width: 200px;
   margin-right: 5%;
   background-color: gray;
   background-image: url(${(props) => props.img_path});
@@ -81,7 +124,7 @@ const DetailMainImg = styled.div<{ img_path: string }>`
   &::after {
     content: "";
     display: block;
-    padding-bottom: 141.5%;
+    padding-bottom: 145%;
   }
 `;
 
@@ -90,30 +133,43 @@ export default function Detail() {
   const isTv = useMatch(`/tv/${id}`);
   const isMovie = useMatch(`/movie/${id}`);
   const category = isTv ? "tv" : isMovie ? "movie" : undefined;
-  const { isLoading, data } = useQuery<IDetailData | undefined>(
-    `${category}${id}Detail`,
-    () => fetchDetail({ category, id })
+  const { isLoading: isDetailLoading, data: detailData } = useQuery<
+    IDetailData | undefined
+  >(`${category}${id}Detail`, () => fetchDetail({ category, id }));
+  const { isLoading: isSimilarLoading, data: similarData } = useQuery(
+    `${category}${id}similar`,
+    () => fetchSimilar({ category, id })
   );
-  const title = data?.name || data?.title;
-  console.log(data);
+  const title = detailData?.name || detailData?.title;
   return (
     <Contianer>
-      {isLoading ? (
+      {isDetailLoading ? (
         "Loading"
       ) : (
         <DetailMain
-          img_path={imageUrlMake(data?.backdrop_path || "", "original")}
+          img_path={imageUrlMake(detailData?.backdrop_path || "", "original")}
         >
           <DetailMainInfo>
-            <InfoTitle>{title}</InfoTitle>
-            <InfoBtns></InfoBtns>
-            <InfoOverview>{data?.overview}</InfoOverview>
+            <InfoTitle>
+              {title}
+              <InfoLank>평점 : {detailData?.vote_average}</InfoLank>
+            </InfoTitle>
+            <InfoBtns>
+              <span>자세히 보기 &rarr;</span>
+            </InfoBtns>
+            <InfoOverview>{detailData?.overview}</InfoOverview>
           </DetailMainInfo>
           <DetailMainImg
-            img_path={imageUrlMake(data?.poster_path || "", "w500")}
+            img_path={imageUrlMake(detailData?.poster_path || "", "w500")}
           />
         </DetailMain>
       )}
+      <SwiperSlider
+        isLoading={isSimilarLoading}
+        data={similarData?.results.slice(0, 20)!}
+        title="이 컨텐츠와 비슷한 프로그램"
+        category={category}
+      />
     </Contianer>
   );
 }

@@ -4,7 +4,7 @@ import Home from "./Routes/Home";
 import Movie from "./Routes/movies/Movie";
 import Search from "./Routes/Search";
 import Tv from "./Routes/tv/Tv";
-import { createGlobalStyle, styled } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { useRecoilState } from "recoil";
 import { windowWidth } from "./atoms";
 import Header from "./components/Header/Header";
@@ -86,10 +86,6 @@ a {
 }
 `;
 
-const GlobalWrapper = styled.div`
-  position: relative;
-`;
-
 function App() {
   const [width, setWidth] = useRecoilState(windowWidth);
   useEffect(() => {
@@ -102,18 +98,16 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyle width={width} />
-      <GlobalWrapper>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tv" element={<Tv />} />
-          <Route path="/tv/:id" element={<TvDetail />} />
-          <Route path="/movie" element={<Movie />} />
-          <Route path="/movie/:id" element={<MovieDetail />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
-        <Footer />
-      </GlobalWrapper>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/tv" element={<Tv />} />
+        <Route path="/tv/:id" element={<TvDetail />} />
+        <Route path="/movie" element={<Movie />} />
+        <Route path="/movie/:id" element={<MovieDetail />} />
+        <Route path="/search" element={<Search />} />
+      </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

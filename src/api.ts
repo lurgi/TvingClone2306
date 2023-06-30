@@ -72,3 +72,17 @@ export function fetchDetail({
   ).then((response) => response.json());
   return returnData;
 }
+
+export function fetchSimilar({
+  category,
+  id,
+}: {
+  category?: "movie" | "tv";
+  id?: string;
+}) {
+  const returnData = fetch(
+    `${URL}/${category}/${id}/similar?language=ko-KR`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}
