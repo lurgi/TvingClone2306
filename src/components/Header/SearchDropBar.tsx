@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
 import { FadeInOutVar } from "../../util";
+import { useNavigate } from "react-router-dom";
 
 const Contianer = styled(motion.div)`
   position: absolute;
@@ -49,11 +50,20 @@ const SearchBtn = styled.button`
     cursor: pointer;
   }
 `;
+interface ISearch {
+  SearchText: string;
+}
 
-const SearchDropBar = () => {
-  const { register, handleSubmit } = useForm();
-  const onValid = (form: any) => {
-    console.log(form);
+const SearchDropBar = ({
+  setIsSearchBar,
+}: {
+  setIsSearchBar?: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const { register, handleSubmit } = useForm<ISearch>();
+  const navigate = useNavigate();
+  const onValid = (form: ISearch) => {
+    navigate(`search/${form.SearchText}`);
+    if (setIsSearchBar) setIsSearchBar(false);
   };
   const onInValid = (errors: any) => {
     console.log(errors.SearchText.message);

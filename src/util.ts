@@ -24,3 +24,7 @@ export const FadeInOutVar = {
 export const imageUrlMake = (imageUrl: string, size: "original" | "w500") => {
   return `https://image.tmdb.org/t/p/${size}/${imageUrl}`;
 };
+
+export const heightTransfrom = (x: number) => {
+  return `${(65 / 1920) * x + 30}px`;
+};

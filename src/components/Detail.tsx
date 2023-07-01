@@ -74,7 +74,6 @@ const DetailMainInfo = styled.div`
 `;
 const InfoTitle = styled.span`
   color: ${(props) => props.theme.gray50};
-  height: 18%;
   font-weight: 600;
   font-size: 300%;
   margin-bottom: 1%;
@@ -87,7 +86,7 @@ const InfoLank = styled.span`
   color: ${(props) => props.theme.gray200};
 `;
 const InfoBtns = styled.button`
-  width: 13em;
+  width: 11em;
   border-radius: 5px;
   border: none;
   display: flex;
@@ -108,7 +107,7 @@ const InfoBtns = styled.button`
   &:after {
     content: "";
     display: block;
-    padding-bottom: 3em;
+    padding-bottom: 2.5em;
   }
 `;
 const InfoOverview = styled.span`
@@ -117,7 +116,7 @@ const InfoOverview = styled.span`
   color: ${(props) => props.theme.gray200};
 `;
 const DetailMainImg = styled.div<{ img_path: string }>`
-  width: 35%;
+  width: 30%;
   margin-right: 5%;
   background-color: gray;
   background-image: url(${(props) => props.img_path});
@@ -126,7 +125,8 @@ const DetailMainImg = styled.div<{ img_path: string }>`
   position: relative;
   &::after {
     content: "";
-    height: 51%;
+    display: block;
+    padding-bottom: 151%;
   }
 `;
 
@@ -168,7 +168,7 @@ export default function Detail() {
       )}
       <SwiperSlider
         isLoading={isSimilarLoading}
-        data={similarData?.results.slice(0, 20)!}
+        data={similarData?.results?.slice(0, 20)!}
         title="이 컨텐츠와 비슷한 프로그램"
         category={category}
       />

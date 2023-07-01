@@ -7,12 +7,8 @@ import ProfileDropMenu from "./ProfileDropMenu";
 import { useRecoilValue } from "recoil";
 import { windowWidth } from "../../atoms";
 import { Link, useMatch } from "react-router-dom";
-import { fadeIn } from "../../util";
+import { fadeIn, heightTransfrom } from "../../util";
 import { AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
-
-const heightTransfrom = (x: number) => {
-  return `${(65 / 1920) * x + 30}px`;
-};
 
 const Container = styled.header<{ isOpaque: boolean; width: number }>`
   height: ${(props) => heightTransfrom(props.width)};
@@ -119,6 +115,10 @@ function Header() {
   const tvMatch = useMatch("/tv");
   const movieMatch = useMatch("/movie");
   const homeMatch = useMatch("/");
+  const searchMatch = useMatch({
+    path: "/search",
+    end: false,
+  });
 
   const profile = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -162,23 +162,25 @@ function Header() {
         </Ul>
       </Nav>
       <SearchProfile>
-        <SearchIcon onClick={handleSearch}>
-          {isSearchBar ? (
-            <IconDiv1>
-              <FontAwesomeIcon
-                icon={icon({ name: "xmark", style: "solid" })}
-                style={{ fontSize: "160%" }}
-              />
-            </IconDiv1>
-          ) : (
-            <IconDiv2>
-              <FontAwesomeIcon
-                icon={icon({ name: "magnifying-glass", style: "solid" })}
-                style={{ fontSize: "130%" }}
-              />
-            </IconDiv2>
-          )}
-        </SearchIcon>
+        {searchMatch ? null : (
+          <SearchIcon onClick={handleSearch}>
+            {isSearchBar ? (
+              <IconDiv1>
+                <FontAwesomeIcon
+                  icon={icon({ name: "xmark", style: "solid" })}
+                  style={{ fontSize: "160%" }}
+                />
+              </IconDiv1>
+            ) : (
+              <IconDiv2>
+                <FontAwesomeIcon
+                  icon={icon({ name: "magnifying-glass", style: "solid" })}
+                  style={{ fontSize: "130%" }}
+                />
+              </IconDiv2>
+            )}
+          </SearchIcon>
+        )}
         <Profile ref={profile}>
           <AvatarImg
             alt="avatar"
@@ -190,7 +192,7 @@ function Header() {
         </Profile>
       </SearchProfile>
       <AnimatePresence>
-        {isSearchBar ? <SearchDropBar /> : null}
+        {isSearchBar ? <SearchDropBar setIsSearchBar={setIsSearchBar} /> : null}
       </AnimatePresence>
     </Container>
   );
