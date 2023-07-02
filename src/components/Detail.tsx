@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { imageUrlMake } from "../util";
 import SwiperSlider from "./others/SwiperSlider";
+import { relative } from "path";
 
 interface IDetailData {
   adult: boolean;
@@ -110,8 +111,20 @@ const InfoBtns = styled.button`
     padding-bottom: 2.5em;
   }
 `;
+const InfoOverviewDiv = styled.div`
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  &::after {
+    content: "";
+    display: block;
+    padding-bottom: 30%;
+  }
+`;
+
 const InfoOverview = styled.span`
   overflow: hidden;
+  position: absolute;
   text-overflow: ellipsis;
   color: ${(props) => props.theme.gray200};
 `;
@@ -159,7 +172,9 @@ export default function Detail() {
                 <span>자세히 보기 &rarr;</span>
               </Link>
             </InfoBtns>
-            <InfoOverview>{detailData?.overview}</InfoOverview>
+            <InfoOverviewDiv>
+              <InfoOverview>{detailData?.overview}</InfoOverview>
+            </InfoOverviewDiv>
           </DetailMainInfo>
           <DetailMainImg
             img_path={imageUrlMake(detailData?.poster_path || "", "w500")}
