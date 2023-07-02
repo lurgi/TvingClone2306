@@ -6,7 +6,7 @@ import SearchDropBar from "./SearchDropBar";
 import ProfileDropMenu from "./ProfileDropMenu";
 import { useRecoilValue } from "recoil";
 import { windowWidth } from "../../atoms";
-import { Link, useMatch } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 import { fadeIn, heightTransfrom } from "../../util";
 import { AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 
@@ -141,6 +141,11 @@ function Header() {
       setIsOpaque(false);
     }
   });
+  const location = useLocation();
+  useEffect(() => {
+    setIsSearchBar(false);
+  }, [location]);
+
   return (
     <Container isOpaque={isOpaque} width={width}>
       <Nav>
