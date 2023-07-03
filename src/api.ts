@@ -86,3 +86,17 @@ export function fetchSimilar({
   ).then((response) => response.json());
   return returnData;
 }
+
+export function fetchSeacrh({
+  keyword,
+  page,
+}: {
+  keyword: string;
+  page: number;
+}) {
+  const returnData = fetch(
+    `${URL}/search/multi?query=${keyword}&include_adult=true?language=ko-KR&page=${page}`,
+    options
+  ).then((response) => response.json());
+  return returnData;
+}

@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 import { imageUrlMake } from "../util";
 import SwiperSlider from "./others/SwiperSlider";
-import { relative } from "path";
 
 interface IDetailData {
   adult: boolean;

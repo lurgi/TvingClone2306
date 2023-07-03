@@ -3,24 +3,35 @@ import SearchDropBar from "../components/Header/SearchDropBar";
 import { useRecoilValue } from "recoil";
 import { windowWidth } from "../atoms";
 import { heightTransfrom } from "../util";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { fetchSeacrh } from "../api";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
   position: relative;
-  z-index: -1;
   width: 100vw;
 `;
-
-const Barcontainer = styled.div<{ width: number }>`
-  height: ${(props) => heightTransfrom(props.width * 3)};
+const FakeHeader = styled.div<{ width: number }>`
+  height: ${(props) => heightTransfrom(props.width)};
+  width: 100vw;
+  position: relative;
+  margin-bottom: 10%;
 `;
 
 function Search() {
   const width = useRecoilValue(windowWidth);
+  const [page, setPage] = useState(1);
+  const { keyword } = useParams();
+  let { isLoading, data } = useQuery("searchData", () =>
+    fetchSeacrh({ keyword: keyword || "", page })
+  );
+  console.log(data);
   return (
     <Wrapper>
-      <Barcontainer width={width}>
-        <SearchDropBar />
-      </Barcontainer>
+      <FakeHeader width={width}>
+        <SearchDropBar isBlack={true} />
+      </FakeHeader>
     </Wrapper>
   );
 }

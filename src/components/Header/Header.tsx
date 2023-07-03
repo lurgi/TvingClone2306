@@ -109,8 +109,8 @@ function Header() {
   const width = useRecoilValue(windowWidth);
   const [isSearchBar, setIsSearchBar] = useState(false);
   const [isProfileMenu, setIsProfileMenu] = useState(false);
-  const handleSearch = () => {
-    setIsSearchBar((prev) => !prev);
+  const handleSearch = async () => {
+    await setIsSearchBar((prev) => !prev);
   };
   const tvMatch = useMatch("/tv");
   const movieMatch = useMatch("/movie");

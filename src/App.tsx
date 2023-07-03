@@ -105,7 +105,7 @@ function App() {
         <Route path="/tv/:id" element={<TvDetail />} />
         <Route path="/movie" element={<Movie />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
-        <Route path="/search/:id" element={<Search />} />
+        <Route path="/search/:keyword" element={<Search />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -5,14 +5,15 @@ import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
 import { FadeInOutVar } from "../../util";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const Contianer = styled(motion.div)`
+const Contianer = styled(motion.div)<{ is_black: boolean }>`
   position: absolute;
   padding-top: 11%;
   height: 300%;
   width: 100%;
   z-index: -1;
-  background-color: #191819;
+  background-color: ${(props) => (props.is_black ? "#050505" : "#191819")};
   display: flex;
   justify-content: center;
 `;
@@ -56,20 +57,25 @@ interface ISearch {
 
 const SearchDropBar = ({
   setIsSearchBar,
+  isBlack = false,
 }: {
+  isBlack?: boolean;
   setIsSearchBar?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { register, handleSubmit } = useForm<ISearch>();
+  const { register, handleSubmit, setFocus } = useForm<ISearch>();
   const navigate = useNavigate();
   const onValid = (form: ISearch) => {
-    navigate(`search/${form.SearchText}`);
-    if (setIsSearchBar) setIsSearchBar(false);
+    navigate(`/search/${form.SearchText}`);
   };
   const onInValid = (errors: any) => {
     console.log(errors.SearchText.message);
   };
+  useEffect(() => {
+    setFocus("SearchText");
+  }, [setFocus]);
   return (
     <Contianer
+      is_black={isBlack}
       variants={FadeInOutVar}
       initial="initial"
       animate="animate"
@@ -81,7 +87,7 @@ const SearchDropBar = ({
             minLength: { message: "2글자 이상 입력해 주세요", value: 2 },
             required: "검색어를 입력해 주세요",
           })}
-          placeholder="제목을 입력해 보세요 "
+          placeholder="제목을 입력해 보세요"
         />
         <SearchBtn type="submit">
           <FontAwesomeIcon
