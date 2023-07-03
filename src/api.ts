@@ -20,6 +20,7 @@ export interface IData {
   adult?: boolean;
   media_type?: "movie" | "tv";
 }
+
 export interface IDatas {
   results: IData[];
 }

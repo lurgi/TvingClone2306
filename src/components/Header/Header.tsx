@@ -21,7 +21,7 @@ const Container = styled.header<{ isOpaque: boolean; width: number }>`
   color: ${(props) => props.theme.gray100};
   display: flex;
   justify-content: space-between;
-  z-index: 1;
+  z-index: 99;
   backdrop-filter: blur(${(props) => (props.isOpaque ? "10px" : "0")});
 `;
 const Nav = styled.nav`

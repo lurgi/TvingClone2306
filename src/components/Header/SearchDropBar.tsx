@@ -58,7 +58,9 @@ interface ISearch {
 const SearchDropBar = ({
   setIsSearchBar,
   isBlack = false,
+  keyword,
 }: {
+  keyword?: string;
   isBlack?: boolean;
   setIsSearchBar?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -66,13 +68,14 @@ const SearchDropBar = ({
   const navigate = useNavigate();
   const onValid = (form: ISearch) => {
     navigate(`/search/${form.SearchText}`);
+    window.location.reload();
   };
   const onInValid = (errors: any) => {
     console.log(errors.SearchText.message);
   };
   useEffect(() => {
-    setFocus("SearchText");
-  }, [setFocus]);
+    if (!isBlack) setFocus("SearchText");
+  }, [setFocus, isBlack]);
   return (
     <Contianer
       is_black={isBlack}
@@ -86,6 +89,7 @@ const SearchDropBar = ({
           {...register("SearchText", {
             minLength: { message: "2글자 이상 입력해 주세요", value: 2 },
             required: "검색어를 입력해 주세요",
+            value: keyword,
           })}
           placeholder="제목을 입력해 보세요"
         />

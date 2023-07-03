@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Routes/Home";
 import Movie from "./Routes/movies/Movie";
-import Search from "./Routes/Search";
+import Search from "./Routes/Search/[keyword]";
 import Tv from "./Routes/tv/Tv";
 import { createGlobalStyle } from "styled-components";
 import { useRecoilState } from "recoil";

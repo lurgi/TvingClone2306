@@ -39,3 +39,6 @@
 4. Swiper로 구현한 캐러셀은 반응형, Responsive 디자인. Card Components 개수가 window width크기에 따라 변경된다.
 
 ### Detail Component
+
+1. 반응형 페이지.
+2. Slider Component 재활용
