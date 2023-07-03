@@ -42,3 +42,4 @@
 
 1. 반응형 페이지.
 2. Slider Component 재활용
+3. navigate이후 window.location.reload()하기
