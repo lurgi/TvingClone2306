@@ -96,7 +96,7 @@ function App() {
     return () => window.removeEventListener("resize", handleSet);
   }, [setWidth]);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <GlobalStyle width={width} />
       <Header />
       <Routes>
