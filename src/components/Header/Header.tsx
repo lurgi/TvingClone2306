@@ -144,6 +144,7 @@ function Header() {
   const location = useLocation();
   useEffect(() => {
     setIsSearchBar(false);
+    window.scrollTo(0, 0);
   }, [location]);
 
   return (
