@@ -6,7 +6,7 @@
 
 ### 데이터 : [TMDB(The Movie DB)](https://www.themoviedb.org/?language=ko)
 
-### 페이지 : [gh page](https://lurgi.github.io/TvingClone2306)
+### 페이지 : [Gh Page](https://lurgi.github.io/TvingClone2306)
 
 ---
 
