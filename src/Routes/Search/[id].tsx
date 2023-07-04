@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { IDatas, fetchSeacrh } from "../../api";
 import { useParams } from "react-router-dom";
 import Card from "../../components/others/Card";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   position: relative;
@@ -42,10 +43,12 @@ const Cards = styled.div`
 function Search() {
   const width = useRecoilValue(windowWidth);
   const { id } = useParams();
-  let { isLoading, data } = useQuery<IDatas>("searchData", () =>
+  let { isLoading, data, refetch } = useQuery<IDatas>("searchData", () =>
     fetchSeacrh({ keyword: id || "", page: 1 })
   );
-  console.log(data);
+  useEffect(() => {
+    refetch();
+  }, [id, refetch]);
   return (
     <Wrapper>
       <FakeHeader width={width}>

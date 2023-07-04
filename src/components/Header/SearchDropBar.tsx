@@ -68,7 +68,6 @@ const SearchDropBar = ({
   const navigate = useNavigate();
   const onValid = (form: ISearch) => {
     navigate(`/search/${form.SearchText}`);
-    window.location.reload();
   };
   const onInValid = (errors: any) => {
     console.log(errors.SearchText.message);
