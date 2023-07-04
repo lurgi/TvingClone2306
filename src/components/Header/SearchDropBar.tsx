@@ -67,7 +67,7 @@ const SearchDropBar = ({
   const { register, handleSubmit, setFocus } = useForm<ISearch>();
   const navigate = useNavigate();
   const onValid = (form: ISearch) => {
-    navigate(`${process.env.PUBLIC_URL}/search/${form.SearchText}`);
+    navigate(`/search/${form.SearchText}`);
     window.location.reload();
   };
   const onInValid = (errors: any) => {
