@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FadeInOutVar } from "../../util";
 
 const fontSizeTransfrom = (x: number) => {
-  return `${(1 / 100) * x + 5}px`;
+  return `${Math.min((1 / 100) * x + 5, 14)}px`;
 };
 
 const Container = styled(motion.div)<{ width: number }>`
@@ -14,7 +14,9 @@ const Container = styled(motion.div)<{ width: number }>`
   top: 140%;
   right: 0;
   width: 750%;
+  max-width: 225px;
   height: 900%;
+  max-height: 270px;
   border-radius: 4px;
   border: 0.5px solid ${(props) => props.theme.gray600};
   font-size: ${(props) => fontSizeTransfrom(props.width)};

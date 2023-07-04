@@ -41,24 +41,24 @@ const Cards = styled.div`
 `;
 function Search() {
   const width = useRecoilValue(windowWidth);
-  const { keyword } = useParams();
+  const { id } = useParams();
   let { isLoading, data } = useQuery<IDatas>("searchData", () =>
-    fetchSeacrh({ keyword: keyword || "", page: 1 })
+    fetchSeacrh({ keyword: id || "", page: 1 })
   );
   console.log(data);
   return (
     <Wrapper>
       <FakeHeader width={width}>
-        <SearchDropBar isBlack={true} keyword={keyword} />
+        <SearchDropBar isBlack={true} keyword={id} />
       </FakeHeader>
       <Contents>
         {isLoading ? (
           "Loading..."
         ) : data?.results.length === 0 ? (
-          <Title>{keyword}의 검색결과가 없습니다</Title>
+          <Title>{id}의 검색결과가 없습니다</Title>
         ) : (
           <>
-            <Title>{keyword}의 검색결과</Title>
+            <Title>{id}의 검색결과</Title>
             <Cards>
               {data?.results?.map((data) => (
                 <Card key={data.id} data={data} />

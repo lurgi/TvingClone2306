@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Routes/Home";
 import Movie from "./Routes/movies/Movie";
-import Search from "./Routes/Search/[keyword]";
+import Search from "./Routes/Search/[id]";
 import Tv from "./Routes/tv/Tv";
 import { createGlobalStyle } from "styled-components";
 import { useRecoilState } from "recoil";
@@ -105,7 +105,7 @@ function App() {
         <Route path="/tv/:id" element={<TvDetail />} />
         <Route path="/movie" element={<Movie />} />
         <Route path="/movie/:id" element={<MovieDetail />} />
-        <Route path="/search/:keyword" element={<Search />} />
+        <Route path="/search/:id" element={<Search />} />
       </Routes>
       <Footer />
     </BrowserRouter>
