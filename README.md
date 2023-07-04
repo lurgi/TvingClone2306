@@ -6,6 +6,8 @@
 
 ### 데이터 : [TMDB(The Movie DB)](https://www.themoviedb.org/?language=ko)
 
+### 페이지 : [Gh Page](https://lurgi.github.io/TvingClone2306)
+
 ---
 
 ## Routes
@@ -42,4 +44,7 @@
 
 1. 반응형 페이지.
 2. Slider Component 재활용
-3. navigate이후 window.location.reload()하기
+
+### Seacrh Component
+
+1. navigate이후 window.location.reload()하기 => gh-page는 reload하면 404로 나온다. 때문에 useQuery의 refetch기능 이용하기
