@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/TvingClone2306/static/css/main.a3bca7cf.css",
-    "main.js": "/TvingClone2306/static/js/main.0c2bfb6e.js",
+    "main.js": "/TvingClone2306/static/js/main.8f8ed594.js",
     "index.html": "/TvingClone2306/index.html",
     "main.a3bca7cf.css.map": "/TvingClone2306/static/css/main.a3bca7cf.css.map",
-    "main.0c2bfb6e.js.map": "/TvingClone2306/static/js/main.0c2bfb6e.js.map"
+    "main.8f8ed594.js.map": "/TvingClone2306/static/js/main.8f8ed594.js.map"
   },
   "entrypoints": [
     "static/css/main.a3bca7cf.css",
-    "static/js/main.0c2bfb6e.js"
+    "static/js/main.8f8ed594.js"
   ]
 }
